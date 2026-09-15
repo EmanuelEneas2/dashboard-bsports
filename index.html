@@ -63,11 +63,6 @@ body{background:var(--bg); color:var(--ink); font-family:'Inter',-apple-system,s
 .wrap{max-width:1400px; margin:0 auto; padding:26px 32px 60px;}
 
 /* ===== KPIs ===== */
-.kpi-row{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:20px;}
-.kpi{background:var(--panel); border:1px solid var(--line); border-top:2px solid var(--cyan); border-radius:var(--radius); padding:15px 17px;}
-.kpi .label{font-size:10px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:1.2px; margin-bottom:8px; font-weight:600;}
-.kpi .value{font-size:28px; line-height:1;}
-.kpi .delta{font-size:10.5px; margin-top:8px; font-family:'IBM Plex Mono',monospace; display:flex; align-items:center; gap:4px;}
 .delta.up-neutral{color:var(--cyan);}
 .delta.down-good{color:var(--good);}
 .delta.up-bad{color:var(--bad);}
@@ -139,7 +134,6 @@ canvas.chartjs{max-height:250px;}
 .empty-state{padding:30px 0; color:var(--ink-faint); font-size:13px; line-height:1.6;}
 
 @media (max-width:1100px){
-  .kpi-row{grid-template-columns:repeat(3,1fr);}
   .grid2, .grid3{grid-template-columns:1fr;}
   .masthead-top{flex-direction:column; align-items:flex-start;}
   .filter-group{align-items:flex-start;}
@@ -266,10 +260,8 @@ canvas.chartjs{max-height:250px;}
 
 
 /* ===== EMBUDO 3D ===== */
-#funnel3d{width:100%; height:430px; border-radius:10px; overflow:hidden;
   background:radial-gradient(circle at 50% 35%, #16243F, #0A1120 78%);
   border:1px solid var(--line); cursor:grab; position:relative;}
-.f3-tip{position:absolute; pointer-events:none; background:#0A1120; border:1px solid var(--cyan);
   padding:8px 13px; border-radius:8px; font:600 12px 'IBM Plex Mono',monospace; color:var(--ink);
   display:none; z-index:10; white-space:nowrap;}
 
@@ -362,7 +354,7 @@ canvas.chartjs{max-height:250px;}
 @keyframes sweep{ to{ background-position:-90% 0; opacity:0; } }
 
 /* números que suben al aparecer */
-.kpi .value, .crm-val, .step-pct{ font-variant-numeric:tabular-nums; }
+.crm-val{ font-variant-numeric:tabular-nums; }
 
 
 /* ===== RESUMEN EJECUTIVO ===== */
@@ -380,7 +372,7 @@ canvas.chartjs{max-height:250px;}
 .eff-table{width:100%; border-collapse:collapse;}
 .eff-table th{text-align:left; font-size:9.5px; letter-spacing:.7px; text-transform:uppercase;
   color:var(--ink-faint); font-weight:600; padding:0 10px 9px 0; border-bottom:1px solid var(--line);}
-.eff-table th.num, .eff-table td.num{text-align:right; padding-right:16px;}
+.eff-table th.num, .eff-table td.num{text-align:right; padding-right:16px; white-space:nowrap;}
 .eff-table td{padding:15px 10px 15px 0; border-bottom:1px solid rgba(255,255,255,.05); font-size:13px;}
 .eff-table tr:last-child td{border-bottom:none;}
 .eff-name{font-weight:600; color:var(--ink);}
@@ -409,6 +401,84 @@ canvas.chartjs{max-height:250px;}
 .ea-text{font-size:13.5px; color:var(--ink); line-height:1.65;}
 .ea-text b{color:var(--cyan); font-weight:700;}
 
+
+/* ===== DETALLE POR CAMPAÑA ===== */
+.det-card{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:24px 26px; margin-bottom:16px;}
+.det-top{display:flex; justify-content:space-between; align-items:flex-start; gap:20px;
+  flex-wrap:wrap; padding-bottom:18px; border-bottom:1px solid var(--line);}
+.det-name{font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:28px;
+  text-transform:uppercase; letter-spacing:.4px; margin:0 0 7px; line-height:1;}
+.det-pub{font-size:13px; color:var(--ink-dim); margin:0 0 12px; font-style:italic;}
+.det-meta{display:flex; gap:9px; flex-wrap:wrap;}
+.det-chip{font-size:10px; letter-spacing:.7px; text-transform:uppercase; color:var(--ink-dim);
+  background:rgba(255,255,255,.04); border:1px solid var(--line); padding:5px 11px;
+  border-radius:100px; font-family:'IBM Plex Mono',monospace;}
+.det-chip b{color:var(--ink); font-weight:600;}
+.det-verdict{font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:34px;
+  line-height:1; text-align:right; white-space:nowrap;}
+.det-verdict small{display:block; font-family:'IBM Plex Mono',monospace; font-size:9.5px;
+  letter-spacing:1.2px; text-transform:uppercase; color:var(--ink-faint); margin-top:7px; font-weight:400;}
+
+.det-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin:18px 0;}
+.det-m{padding:0 16px; border-right:1px solid var(--line);}
+.det-m:first-child{padding-left:0;} .det-m:last-child{border-right:none;}
+.det-mv{font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:24px; line-height:1; color:var(--ink);}
+.det-ml{font-size:9.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-faint); margin-top:6px;}
+
+.det-cols{display:grid; grid-template-columns:1.25fr 1fr; gap:22px; margin-top:6px;}
+.det-h4{font-size:11px; letter-spacing:1.2px; text-transform:uppercase; color:var(--cyan);
+  font-weight:700; margin:0 0 12px;}
+.pl-row{display:flex; align-items:center; gap:11px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,.05);}
+.pl-row:last-child{border-bottom:none;}
+.pl-name{width:62px; font-size:12.5px; color:var(--ink); font-weight:600;}
+.pl-bar{flex:1; height:7px; border-radius:4px; background:rgba(255,255,255,.06); overflow:hidden;}
+.pl-bar i{display:block; height:100%; border-radius:4px; background:linear-gradient(90deg,var(--navy-soft),var(--cyan));}
+.pl-val{font-size:11.5px; color:var(--ink-dim); font-family:'IBM Plex Mono',monospace;
+  width:74px; text-align:right;}
+.pl-val b{color:var(--ink);}
+.det-note{font-size:12.5px; color:var(--ink-dim); line-height:1.7; margin:0;}
+.det-note b{color:var(--ink);}
+.det-link{display:inline-flex; align-items:center; gap:7px; margin-top:14px; font-size:12px;
+  color:var(--cyan); text-decoration:none; border:1px solid rgba(0,152,224,.35);
+  padding:7px 13px; border-radius:100px; transition:all .18s;}
+.det-link:hover{background:rgba(0,152,224,.12);}
+@media (max-width:1100px){ .det-grid{grid-template-columns:repeat(3,1fr); gap:16px 0;}
+  .det-cols{grid-template-columns:1fr;} .det-m{border-right:none;} }
+
+
+/* ===== SEGMENTACIÓN ===== */
+.seg-block{margin-top:20px; padding-top:18px; border-top:1px solid var(--line);}
+.seg-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:4px;}
+.seg-item{}
+.seg-k{font-size:9.5px; letter-spacing:1.1px; text-transform:uppercase; color:var(--ink-faint);
+  font-weight:700; margin-bottom:7px;}
+.seg-v{font-size:13px; color:var(--ink); line-height:1.55;}
+.seg-v .dim{color:var(--ink-dim); font-size:12px;}
+.tag-list{display:flex; flex-wrap:wrap; gap:6px; margin-top:3px;}
+.tag{font-size:11px; color:var(--ink-dim); background:rgba(255,255,255,.045);
+  border:1px solid var(--line); padding:4px 9px; border-radius:5px;}
+.tag.on{color:var(--cyan); border-color:rgba(0,152,224,.35); background:rgba(0,152,224,.08);}
+.age-bar{position:relative; height:26px; margin-top:8px;}
+.age-track{position:absolute; top:10px; left:0; right:0; height:5px; border-radius:3px;
+  background:rgba(255,255,255,.07);}
+.age-fill{position:absolute; top:10px; height:5px; border-radius:3px;
+  background:linear-gradient(90deg,var(--navy-soft),var(--cyan));}
+.age-scale{display:flex; justify-content:space-between; margin-top:20px; font-size:9.5px;
+  color:var(--ink-faint); font-family:'IBM Plex Mono',monospace;}
+@media (max-width:1100px){ .seg-grid{grid-template-columns:repeat(2,1fr);} }
+
+
+.seg-panel{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:24px 26px; margin-top:4px;}
+.seg-panel > h3{margin:0 0 4px; font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:24px; text-transform:uppercase; letter-spacing:.4px;}
+.seg-panel > .desc{font-size:12.5px; color:var(--ink-dim); margin:0 0 20px;}
+.seg-panel .seg-grid{border-top:1px solid var(--line); padding-top:20px;}
+.seg-foot{margin-top:20px; padding-top:16px; border-top:1px solid var(--line);
+  font-size:12.5px; color:var(--ink-dim); line-height:1.7;}
+.seg-foot b{color:var(--ink);}
+
 </style>
 </head>
 <body>
@@ -420,7 +490,7 @@ canvas.chartjs{max-height:250px;}
         <div>
           <div class="eyebrow">Blue Open Data · B-Sports</div>
           <h1 class="display">Informe de Rendimiento</h1>
-          <p class="meta">Meta Ads &nbsp;·&nbsp; <b>9 ago – 7 sept 2026</b> &nbsp;·&nbsp; Cuenta <b>927685516855714</b> &nbsp;·&nbsp; Andrés Sorbara<br><span style="color:#9BB4D6">Informe emitido el <b>8 de septiembre de 2026</b></span></p>
+          <p class="meta">Meta Ads &nbsp;·&nbsp; <b>16 ago – 14 sept 2026</b> &nbsp;·&nbsp; Cuenta <b>927685516855714</b> &nbsp;·&nbsp; Andrés Sorbara<br><span style="color:#9BB4D6">Informe emitido el <b>15 de septiembre de 2026</b></span></p>
         </div>
       </div>
       <div class="filter-group">
@@ -438,7 +508,6 @@ canvas.chartjs{max-height:250px;}
 
   <div class="wrap">
 
-    <div class="kpi-row" id="kpiRow"></div>
 
     <div class="exec" id="execSummary">
       <div class="exec-head">
@@ -455,13 +524,16 @@ canvas.chartjs{max-height:250px;}
               <th>Presupuesto vs leads</th>
               <th class="num">Inversión</th>
               <th class="num">Leads</th>
-              <th class="num">Costo por lead</th>
+              <th class="num" title="Costo por click">CPC</th>
               <th></th>
             </tr>
           </thead>
           <tbody></tbody>
         </table>
         <div class="exec-action" id="execAction"></div>
+      </div>
+
+
       </div>
     </div>
 
@@ -580,23 +652,16 @@ canvas.chartjs{max-height:250px;}
         </div>
       </div>
 
-      <div class="grid2">
-        <div class="panel">
-          <div class="panel-head">
-            <h2>Embudo en 3D</h2>
-            <span class="src-tag">estimado</span>
-          </div>
-          <p class="desc" id="funnelDesc">Cada anillo es una etapa: cuanto más angosto, menos gente llega.</p>
-          <div id="funnel3d"></div>
-        </div>
+    </div>
 
-        <div class="panel">
-          <div class="panel-head"><h2>Hasta dónde llegan</h2></div>
-          <p class="desc">Porcentaje del total que alcanza cada etapa.</p>
-          <div class="steps" id="stepsWrap"></div>
-        </div>
+    <div class="bot-section" id="detSection">
+      <div class="section-head">
+        <h2>Detalle por campaña</h2>
+        <span class="section-badge">Qué publica cada una</span>
       </div>
-
+      <p class="section-sub">Creatividad, objetivo, dónde se muestra y a quién le llega.</p>
+      <div id="detWrap"></div>
+      <div id="segGeneral"></div>
     </div>
 
     <div class="footer-note">
@@ -612,7 +677,7 @@ canvas.chartjs{max-height:250px;}
   </div>
 
 <script>
-const DATA = {"regionByCampaign": {"clubes": {"Buenos Aires": {"spend": 950447.52, "clicks": 2331, "impressions": 137911, "reach": 64822, "cpc": 407.74, "ctr": 1.69}, "Ciudad Autónoma de Buenos Aires": {"spend": 158823.52, "clicks": 297, "impressions": 11798, "reach": 6894, "cpc": 534.76, "ctr": 2.517}, "Córdoba": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Santa Fe": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Mendoza": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Entre Rios": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Neuquén": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Tucuman": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Río Negro": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Salta": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Chaco": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Misiones": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "San Juan": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Chubut": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "San Luis": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Corrientes": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Santa Cruz": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Santiago del Estero": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "La Rioja": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Jujuy": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "La Pampa": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Catamarca": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Formosa": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Tierra del Fuego": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}}, "siguecon": {"Buenos Aires": {"spend": 335621.62, "clicks": 357, "impressions": 71166, "reach": 36005, "cpc": 940.12, "ctr": 0.502}, "Córdoba": {"spend": 127315.96, "clicks": 139, "impressions": 28157, "reach": 13172, "cpc": 915.94, "ctr": 0.494}, "Santa Fe": {"spend": 103072.05, "clicks": 138, "impressions": 24018, "reach": 11320, "cpc": 746.9, "ctr": 0.575}, "Mendoza": {"spend": 60534.8, "clicks": 80, "impressions": 13999, "reach": 6425, "cpc": 756.69, "ctr": 0.571}, "Ciudad Autónoma de Buenos Aires": {"spend": 45474.14, "clicks": 62, "impressions": 7074, "reach": 4082, "cpc": 733.45, "ctr": 0.876}, "Entre Rios": {"spend": 44744.52, "clicks": 42, "impressions": 10849, "reach": 4912, "cpc": 1065.35, "ctr": 0.387}, "Neuquén": {"spend": 38329.25, "clicks": 25, "impressions": 6270, "reach": 2985, "cpc": 1533.17, "ctr": 0.399}, "Tucuman": {"spend": 35382.33, "clicks": 38, "impressions": 7478, "reach": 3812, "cpc": 931.11, "ctr": 0.508}, "Río Negro": {"spend": 31007.31, "clicks": 22, "impressions": 6885, "reach": 3338, "cpc": 1409.42, "ctr": 0.32}, "Salta": {"spend": 28230.15, "clicks": 34, "impressions": 6594, "reach": 3185, "cpc": 830.3, "ctr": 0.516}, "Chaco": {"spend": 25578.9, "clicks": 35, "impressions": 6747, "reach": 3413, "cpc": 730.83, "ctr": 0.519}, "Misiones": {"spend": 25342.92, "clicks": 22, "impressions": 6823, "reach": 3394, "cpc": 1151.95, "ctr": 0.322}, "San Juan": {"spend": 25018.59, "clicks": 28, "impressions": 6712, "reach": 3234, "cpc": 893.52, "ctr": 0.417}, "Chubut": {"spend": 24249.9, "clicks": 27, "impressions": 5485, "reach": 2648, "cpc": 898.14, "ctr": 0.492}, "Corrientes": {"spend": 23414.75, "clicks": 30, "impressions": 5681, "reach": 3037, "cpc": 780.49, "ctr": 0.528}, "San Luis": {"spend": 23322.39, "clicks": 22, "impressions": 5227, "reach": 2436, "cpc": 1060.11, "ctr": 0.421}, "Santa Cruz": {"spend": 19145.35, "clicks": 11, "impressions": 4330, "reach": 1857, "cpc": 1740.49, "ctr": 0.254}, "Santiago del Estero": {"spend": 18894.58, "clicks": 19, "impressions": 4566, "reach": 2241, "cpc": 994.45, "ctr": 0.416}, "La Rioja": {"spend": 16137.86, "clicks": 13, "impressions": 4069, "reach": 1763, "cpc": 1241.37, "ctr": 0.319}, "Jujuy": {"spend": 15870.07, "clicks": 23, "impressions": 3483, "reach": 1739, "cpc": 690.0, "ctr": 0.66}, "La Pampa": {"spend": 15474.47, "clicks": 20, "impressions": 3862, "reach": 1825, "cpc": 773.72, "ctr": 0.518}, "Catamarca": {"spend": 14391.15, "clicks": 10, "impressions": 3634, "reach": 1737, "cpc": 1439.12, "ctr": 0.275}, "Formosa": {"spend": 14034.62, "clicks": 10, "impressions": 3038, "reach": 1510, "cpc": 1403.46, "ctr": 0.329}, "Tierra del Fuego": {"spend": 9100.78, "clicks": 12, "impressions": 1905, "reach": 900, "cpc": 758.4, "ctr": 0.63}}, "sueno": {"Corrientes": {"spend": 220651.43, "clicks": 284, "impressions": 73255, "reach": 20378, "cpc": 776.94, "ctr": 0.388}, "Chubut": {"spend": 143246.82, "clicks": 153, "impressions": 42436, "reach": 11229, "cpc": 936.25, "ctr": 0.361}, "San Juan": {"spend": 115817.84, "clicks": 116, "impressions": 30097, "reach": 9100, "cpc": 998.43, "ctr": 0.385}, "Misiones": {"spend": 97004.79, "clicks": 116, "impressions": 27784, "reach": 8370, "cpc": 836.25, "ctr": 0.418}, "Formosa": {"spend": 71720.99, "clicks": 91, "impressions": 24213, "reach": 6890, "cpc": 788.14, "ctr": 0.376}, "Catamarca": {"spend": 35560.53, "clicks": 57, "impressions": 11622, "reach": 3129, "cpc": 623.87, "ctr": 0.49}, "Buenos Aires": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Ciudad Autónoma de Buenos Aires": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Córdoba": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Santa Fe": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Mendoza": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Entre Rios": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Neuquén": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Tucuman": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Río Negro": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Salta": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Chaco": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "San Luis": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Santa Cruz": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Santiago del Estero": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "La Rioja": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Jujuy": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "La Pampa": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Tierra del Fuego": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}}, "all": {"Buenos Aires": {"spend": 1286069.14, "clicks": 2688, "impressions": 209077, "reach": 100827, "cpc": 478.45, "ctr": 1.286}, "Corrientes": {"spend": 244066.18, "clicks": 314, "impressions": 78936, "reach": 23415, "cpc": 777.28, "ctr": 0.398}, "Ciudad Autónoma de Buenos Aires": {"spend": 204297.66, "clicks": 359, "impressions": 18872, "reach": 10976, "cpc": 569.07, "ctr": 1.902}, "Chubut": {"spend": 167496.72, "clicks": 180, "impressions": 47921, "reach": 13877, "cpc": 930.54, "ctr": 0.376}, "San Juan": {"spend": 140836.43, "clicks": 144, "impressions": 36809, "reach": 12334, "cpc": 978.03, "ctr": 0.391}, "Córdoba": {"spend": 127315.96, "clicks": 139, "impressions": 28157, "reach": 13172, "cpc": 915.94, "ctr": 0.494}, "Misiones": {"spend": 122347.71, "clicks": 138, "impressions": 34607, "reach": 11764, "cpc": 886.58, "ctr": 0.399}, "Santa Fe": {"spend": 103072.05, "clicks": 138, "impressions": 24018, "reach": 11320, "cpc": 746.9, "ctr": 0.575}, "Formosa": {"spend": 85755.61, "clicks": 101, "impressions": 27251, "reach": 8400, "cpc": 849.07, "ctr": 0.371}, "Mendoza": {"spend": 60534.8, "clicks": 80, "impressions": 13999, "reach": 6425, "cpc": 756.69, "ctr": 0.571}, "Catamarca": {"spend": 49951.68, "clicks": 67, "impressions": 15256, "reach": 4866, "cpc": 745.55, "ctr": 0.439}, "Entre Rios": {"spend": 44744.52, "clicks": 42, "impressions": 10849, "reach": 4912, "cpc": 1065.35, "ctr": 0.387}, "Neuquén": {"spend": 38329.25, "clicks": 25, "impressions": 6270, "reach": 2985, "cpc": 1533.17, "ctr": 0.399}, "Tucuman": {"spend": 35382.33, "clicks": 38, "impressions": 7478, "reach": 3812, "cpc": 931.11, "ctr": 0.508}, "Río Negro": {"spend": 31007.31, "clicks": 22, "impressions": 6885, "reach": 3338, "cpc": 1409.42, "ctr": 0.32}, "Salta": {"spend": 28230.15, "clicks": 34, "impressions": 6594, "reach": 3185, "cpc": 830.3, "ctr": 0.516}, "Chaco": {"spend": 25578.9, "clicks": 35, "impressions": 6747, "reach": 3413, "cpc": 730.83, "ctr": 0.519}, "San Luis": {"spend": 23322.39, "clicks": 22, "impressions": 5227, "reach": 2436, "cpc": 1060.11, "ctr": 0.421}, "Santa Cruz": {"spend": 19145.35, "clicks": 11, "impressions": 4330, "reach": 1857, "cpc": 1740.49, "ctr": 0.254}, "Santiago del Estero": {"spend": 18894.58, "clicks": 19, "impressions": 4566, "reach": 2241, "cpc": 994.45, "ctr": 0.416}, "La Rioja": {"spend": 16137.86, "clicks": 13, "impressions": 4069, "reach": 1763, "cpc": 1241.37, "ctr": 0.319}, "Jujuy": {"spend": 15870.07, "clicks": 23, "impressions": 3483, "reach": 1739, "cpc": 690.0, "ctr": 0.66}, "La Pampa": {"spend": 15474.47, "clicks": 20, "impressions": 3862, "reach": 1825, "cpc": 773.72, "ctr": 0.518}, "Tierra del Fuego": {"spend": 9100.78, "clicks": 12, "impressions": 1905, "reach": 900, "cpc": 758.4, "ctr": 0.63}}}, "ageByCampaign": {"clubes": {"byAge": [["25-34", {"spend": 343926.29, "clicks": 919, "impressions": 78417, "female": 243, "male": 676, "cpc": 374.24}], ["35-44", {"spend": 252673.45, "clicks": 550, "impressions": 37016, "female": 87, "male": 463, "cpc": 459.41}], ["45-54", {"spend": 173209.65, "clicks": 427, "impressions": 18526, "female": 64, "male": 363, "cpc": 405.64}], ["55-64", {"spend": 105243.33, "clicks": 209, "impressions": 6849, "female": 36, "male": 173, "cpc": 503.56}], ["65+", {"spend": 223912.65, "clicks": 509, "impressions": 7970, "female": 248, "male": 261, "cpc": 439.91}]], "gender": {"female": 678, "male": 1936}}, "siguecon": {"byAge": [["25-34", {"spend": 133920.79, "clicks": 166, "impressions": 42648, "female": 45, "male": 121, "cpc": 806.75}], ["35-44", {"spend": 308662.48, "clicks": 345, "impressions": 80695, "female": 62, "male": 283, "cpc": 894.67}], ["45-54", {"spend": 392956.05, "clicks": 390, "impressions": 82041, "female": 80, "male": 310, "cpc": 1007.58}], ["55-64", {"spend": 207032.02, "clicks": 220, "impressions": 31625, "female": 43, "male": 177, "cpc": 941.05}], ["65+", {"spend": 66358.07, "clicks": 87, "impressions": 8894, "female": 9, "male": 78, "cpc": 762.74}]], "gender": {"female": 239, "male": 969}}, "sueno": {"byAge": [["25-34", {"spend": 173050.11, "clicks": 408, "impressions": 106551, "female": 96, "male": 312, "cpc": 424.14}], ["35-44", {"spend": 188479.23, "clicks": 141, "impressions": 58473, "female": 16, "male": 125, "cpc": 1336.73}], ["45-54", {"spend": 187182.86, "clicks": 140, "impressions": 29017, "female": 27, "male": 113, "cpc": 1337.02}], ["55-64", {"spend": 85007.53, "clicks": 63, "impressions": 9524, "female": 8, "male": 55, "cpc": 1349.33}], ["65+", {"spend": 44754.56, "clicks": 60, "impressions": 4799, "female": 23, "male": 37, "cpc": 745.91}]], "gender": {"female": 170, "male": 642}}, "all": {"byAge": [["25-34", {"spend": 650897.19, "clicks": 1493, "impressions": 227616, "female": 384, "male": 1109, "cpc": 435.97}], ["35-44", {"spend": 749815.16, "clicks": 1036, "impressions": 176184, "female": 165, "male": 871, "cpc": 723.76}], ["45-54", {"spend": 753348.56, "clicks": 957, "impressions": 129584, "female": 171, "male": 786, "cpc": 787.2}], ["55-64", {"spend": 397282.88, "clicks": 492, "impressions": 47998, "female": 87, "male": 405, "cpc": 807.49}], ["65+", {"spend": 335025.28, "clicks": 656, "impressions": 21663, "female": 280, "male": 376, "cpc": 510.71}]], "gender": {"female": 1087, "male": 3547}}}, "dailyByCampaign": {"clubes": [{"date": "2026-08-09", "spend": 40546.56, "clicks": 112, "leads": 5, "cpc": 362.02}, {"date": "2026-08-10", "spend": 32637.51, "clicks": 77, "leads": 3, "cpc": 423.86}, {"date": "2026-08-11", "spend": 41221.0, "clicks": 93, "leads": 9, "cpc": 443.24}, {"date": "2026-08-12", "spend": 34071.17, "clicks": 98, "leads": 12, "cpc": 347.66}, {"date": "2026-08-13", "spend": 35670.17, "clicks": 95, "leads": 3, "cpc": 375.48}, {"date": "2026-08-14", "spend": 30292.89, "clicks": 91, "leads": 12, "cpc": 332.89}, {"date": "2026-08-15", "spend": 40787.39, "clicks": 107, "leads": 12, "cpc": 381.19}, {"date": "2026-08-16", "spend": 37471.61, "clicks": 93, "leads": 5, "cpc": 402.92}, {"date": "2026-08-17", "spend": 41215.23, "clicks": 84, "leads": 4, "cpc": 490.66}, {"date": "2026-08-18", "spend": 40216.64, "clicks": 92, "leads": 9, "cpc": 437.14}, {"date": "2026-08-19", "spend": 39289.31, "clicks": 99, "leads": 9, "cpc": 396.86}, {"date": "2026-08-20", "spend": 32409.65, "clicks": 73, "leads": 12, "cpc": 443.97}, {"date": "2026-08-21", "spend": 31209.31, "clicks": 63, "leads": 9, "cpc": 495.39}, {"date": "2026-08-22", "spend": 33839.54, "clicks": 71, "leads": 11, "cpc": 476.61}, {"date": "2026-08-23", "spend": 37684.17, "clicks": 76, "leads": 8, "cpc": 495.84}, {"date": "2026-08-24", "spend": 44428.94, "clicks": 98, "leads": 3, "cpc": 453.36}, {"date": "2026-08-25", "spend": 34612.94, "clicks": 93, "leads": 7, "cpc": 372.18}, {"date": "2026-08-26", "spend": 36290.63, "clicks": 69, "leads": 8, "cpc": 525.95}, {"date": "2026-08-27", "spend": 36252.48, "clicks": 81, "leads": 5, "cpc": 447.56}, {"date": "2026-08-28", "spend": 28568.42, "clicks": 59, "leads": 7, "cpc": 484.21}, {"date": "2026-08-29", "spend": 37585.77, "clicks": 69, "leads": 8, "cpc": 544.72}, {"date": "2026-08-30", "spend": 39355.3, "clicks": 86, "leads": 8, "cpc": 457.62}, {"date": "2026-08-31", "spend": 50272.62, "clicks": 112, "leads": 13, "cpc": 448.86}, {"date": "2026-09-01", "spend": 35086.86, "clicks": 70, "leads": 5, "cpc": 501.24}, {"date": "2026-09-02", "spend": 39653.88, "clicks": 102, "leads": 15, "cpc": 388.76}, {"date": "2026-09-03", "spend": 34271.07, "clicks": 101, "leads": 5, "cpc": 339.32}, {"date": "2026-09-04", "spend": 24390.88, "clicks": 69, "leads": 5, "cpc": 353.49}, {"date": "2026-09-05", "spend": 32446.68, "clicks": 89, "leads": 9, "cpc": 364.57}, {"date": "2026-09-06", "spend": 45373.96, "clicks": 100, "leads": 8, "cpc": 453.74}, {"date": "2026-09-07", "spend": 42214.23, "clicks": 106, "leads": 9, "cpc": 398.25}], "siguecon": [{"date": "2026-08-09", "spend": 37691.79, "clicks": 47, "leads": 9, "cpc": 801.95}, {"date": "2026-08-10", "spend": 34222.92, "clicks": 53, "leads": 8, "cpc": 645.72}, {"date": "2026-08-11", "spend": 43744.19, "clicks": 53, "leads": 6, "cpc": 825.36}, {"date": "2026-08-12", "spend": 35550.8, "clicks": 56, "leads": 5, "cpc": 634.84}, {"date": "2026-08-13", "spend": 37360.53, "clicks": 46, "leads": 9, "cpc": 812.19}, {"date": "2026-08-14", "spend": 31864.63, "clicks": 39, "leads": 5, "cpc": 817.04}, {"date": "2026-08-15", "spend": 37820.74, "clicks": 32, "leads": 3, "cpc": 1181.9}, {"date": "2026-08-16", "spend": 40344.39, "clicks": 45, "leads": 8, "cpc": 896.54}, {"date": "2026-08-17", "spend": 39448.29, "clicks": 40, "leads": 3, "cpc": 986.21}, {"date": "2026-08-18", "spend": 33639.6, "clicks": 32, "leads": 2, "cpc": 1051.24}, {"date": "2026-08-19", "spend": 39044.86, "clicks": 40, "leads": 7, "cpc": 976.12}, {"date": "2026-08-20", "spend": 32985.56, "clicks": 35, "leads": 3, "cpc": 942.44}, {"date": "2026-08-21", "spend": 41659.09, "clicks": 53, "leads": 4, "cpc": 786.02}, {"date": "2026-08-22", "spend": 31572.64, "clicks": 33, "leads": 5, "cpc": 956.75}, {"date": "2026-08-23", "spend": 38754.49, "clicks": 28, "leads": 3, "cpc": 1384.09}, {"date": "2026-08-24", "spend": 45374.46, "clicks": 54, "leads": 5, "cpc": 840.27}, {"date": "2026-08-25", "spend": 37641.67, "clicks": 33, "leads": 4, "cpc": 1140.66}, {"date": "2026-08-26", "spend": 33247.54, "clicks": 23, "leads": 1, "cpc": 1445.55}, {"date": "2026-08-27", "spend": 35209.47, "clicks": 38, "leads": 9, "cpc": 926.57}, {"date": "2026-08-28", "spend": 30974.06, "clicks": 41, "leads": 8, "cpc": 755.46}, {"date": "2026-08-29", "spend": 37842.14, "clicks": 38, "leads": 6, "cpc": 995.85}, {"date": "2026-08-30", "spend": 37474.77, "clicks": 33, "leads": 4, "cpc": 1135.6}, {"date": "2026-08-31", "spend": 47335.7, "clicks": 47, "leads": 6, "cpc": 1007.14}, {"date": "2026-09-01", "spend": 34020.62, "clicks": 29, "leads": 4, "cpc": 1173.12}, {"date": "2026-09-02", "spend": 38152.87, "clicks": 42, "leads": 9, "cpc": 908.4}, {"date": "2026-09-03", "spend": 41937.1, "clicks": 40, "leads": 2, "cpc": 1048.43}, {"date": "2026-09-04", "spend": 24363.92, "clicks": 39, "leads": 3, "cpc": 624.72}, {"date": "2026-09-05", "spend": 35590.9, "clicks": 47, "leads": 5, "cpc": 757.25}, {"date": "2026-09-06", "spend": 40509.14, "clicks": 50, "leads": 4, "cpc": 810.18}, {"date": "2026-09-07", "spend": 45691.19, "clicks": 33, "leads": 4, "cpc": 1384.58}], "sueno": [{"date": "2026-08-09", "spend": 26920.86, "clicks": 20, "leads": 3, "cpc": 1346.04}, {"date": "2026-08-10", "spend": 18439.65, "clicks": 18, "leads": 1, "cpc": 1024.43}, {"date": "2026-08-11", "spend": 29647.17, "clicks": 26, "leads": 1, "cpc": 1140.28}, {"date": "2026-08-12", "spend": 22459.64, "clicks": 12, "leads": 1, "cpc": 1871.64}, {"date": "2026-08-13", "spend": 18268.2, "clicks": 20, "leads": 0, "cpc": 913.41}, {"date": "2026-08-14", "spend": 17277.81, "clicks": 11, "leads": 0, "cpc": 1570.71}, {"date": "2026-08-15", "spend": 24440.79, "clicks": 45, "leads": 5, "cpc": 543.13}, {"date": "2026-08-16", "spend": 26132.51, "clicks": 47, "leads": 0, "cpc": 556.01}, {"date": "2026-08-17", "spend": 22485.97, "clicks": 37, "leads": 0, "cpc": 607.73}, {"date": "2026-08-18", "spend": 25555.13, "clicks": 39, "leads": 3, "cpc": 655.26}, {"date": "2026-08-19", "spend": 25404.3, "clicks": 30, "leads": 0, "cpc": 846.81}, {"date": "2026-08-20", "spend": 20174.85, "clicks": 24, "leads": 0, "cpc": 840.62}, {"date": "2026-08-21", "spend": 17274.57, "clicks": 13, "leads": 0, "cpc": 1328.81}, {"date": "2026-08-22", "spend": 20612.98, "clicks": 17, "leads": 0, "cpc": 1212.53}, {"date": "2026-08-23", "spend": 21458.95, "clicks": 31, "leads": 2, "cpc": 692.22}, {"date": "2026-08-24", "spend": 29544.73, "clicks": 34, "leads": 2, "cpc": 868.96}, {"date": "2026-08-25", "spend": 23938.84, "clicks": 29, "leads": 0, "cpc": 825.48}, {"date": "2026-08-26", "spend": 19878.92, "clicks": 23, "leads": 1, "cpc": 864.3}, {"date": "2026-08-27", "spend": 21919.69, "clicks": 29, "leads": 1, "cpc": 755.85}, {"date": "2026-08-28", "spend": 17891.97, "clicks": 19, "leads": 1, "cpc": 941.68}, {"date": "2026-08-29", "spend": 22972.81, "clicks": 32, "leads": 2, "cpc": 717.9}, {"date": "2026-08-30", "spend": 24409.84, "clicks": 34, "leads": 1, "cpc": 717.94}, {"date": "2026-08-31", "spend": 33483.75, "clicks": 63, "leads": 4, "cpc": 531.49}, {"date": "2026-09-01", "spend": 24341.81, "clicks": 15, "leads": 0, "cpc": 1622.79}, {"date": "2026-09-02", "spend": 13891.81, "clicks": 17, "leads": 0, "cpc": 817.17}, {"date": "2026-09-03", "spend": 21216.22, "clicks": 32, "leads": 0, "cpc": 663.01}, {"date": "2026-09-04", "spend": 18237.77, "clicks": 30, "leads": 2, "cpc": 607.93}, {"date": "2026-09-05", "spend": 22151.22, "clicks": 24, "leads": 1, "cpc": 922.97}, {"date": "2026-09-06", "spend": 23083.59, "clicks": 30, "leads": 0, "cpc": 769.45}, {"date": "2026-09-07", "spend": 30581.73, "clicks": 16, "leads": 2, "cpc": 1911.36}], "all": [{"date": "2026-08-09", "spend": 105159.21, "clicks": 179, "leads": 17, "cpc": 587.48}, {"date": "2026-08-10", "spend": 85300.08, "clicks": 148, "leads": 12, "cpc": 576.35}, {"date": "2026-08-11", "spend": 114612.36, "clicks": 172, "leads": 16, "cpc": 666.35}, {"date": "2026-08-12", "spend": 92081.61, "clicks": 166, "leads": 18, "cpc": 554.71}, {"date": "2026-08-13", "spend": 91298.9, "clicks": 161, "leads": 12, "cpc": 567.07}, {"date": "2026-08-14", "spend": 79435.33, "clicks": 141, "leads": 17, "cpc": 563.37}, {"date": "2026-08-15", "spend": 103048.92, "clicks": 184, "leads": 20, "cpc": 560.05}, {"date": "2026-08-16", "spend": 103948.51, "clicks": 185, "leads": 13, "cpc": 561.88}, {"date": "2026-08-17", "spend": 103149.49, "clicks": 161, "leads": 7, "cpc": 640.68}, {"date": "2026-08-18", "spend": 99411.37, "clicks": 163, "leads": 14, "cpc": 609.89}, {"date": "2026-08-19", "spend": 103738.47, "clicks": 169, "leads": 16, "cpc": 613.84}, {"date": "2026-08-20", "spend": 85570.06, "clicks": 132, "leads": 15, "cpc": 648.26}, {"date": "2026-08-21", "spend": 90142.97, "clicks": 129, "leads": 13, "cpc": 698.78}, {"date": "2026-08-22", "spend": 86025.16, "clicks": 121, "leads": 16, "cpc": 710.95}, {"date": "2026-08-23", "spend": 97897.61, "clicks": 135, "leads": 13, "cpc": 725.17}, {"date": "2026-08-24", "spend": 119348.13, "clicks": 186, "leads": 10, "cpc": 641.66}, {"date": "2026-08-25", "spend": 96193.45, "clicks": 155, "leads": 11, "cpc": 620.6}, {"date": "2026-08-26", "spend": 89417.09, "clicks": 115, "leads": 10, "cpc": 777.54}, {"date": "2026-08-27", "spend": 93381.64, "clicks": 148, "leads": 15, "cpc": 630.96}, {"date": "2026-08-28", "spend": 77434.45, "clicks": 119, "leads": 16, "cpc": 650.71}, {"date": "2026-08-29", "spend": 98400.72, "clicks": 139, "leads": 16, "cpc": 707.92}, {"date": "2026-08-30", "spend": 101239.91, "clicks": 153, "leads": 13, "cpc": 661.7}, {"date": "2026-08-31", "spend": 131092.07, "clicks": 222, "leads": 23, "cpc": 590.5}, {"date": "2026-09-01", "spend": 93449.29, "clicks": 114, "leads": 9, "cpc": 819.73}, {"date": "2026-09-02", "spend": 91698.56, "clicks": 161, "leads": 24, "cpc": 569.56}, {"date": "2026-09-03", "spend": 97424.39, "clicks": 173, "leads": 7, "cpc": 563.15}, {"date": "2026-09-04", "spend": 66992.57, "clicks": 138, "leads": 10, "cpc": 485.45}, {"date": "2026-09-05", "spend": 90188.8, "clicks": 160, "leads": 15, "cpc": 563.68}, {"date": "2026-09-06", "spend": 108966.69, "clicks": 180, "leads": 12, "cpc": 605.37}, {"date": "2026-09-07", "spend": 118487.15, "clicks": 155, "leads": 15, "cpc": 764.43}]}, "deltas": {"clubes": {"spend_pct": 2.2, "clicks_pct": -1.5, "cpc_pct": 3.8, "leads_pct": -6.5}, "siguecon": {"spend_pct": 1.7, "clicks_pct": -7.1, "cpc_pct": 9.5, "leads_pct": -7.5}, "sueno": {"spend_pct": 3.3, "clicks_pct": 9.5, "cpc_pct": -5.7, "leads_pct": 6.2}, "all": {"spend_pct": 2.3, "clicks_pct": -1.2, "cpc_pct": 3.5, "leads_pct": -5.9}}, "timelineDates": ["2026-08-09", "2026-08-10", "2026-08-11", "2026-08-12", "2026-08-13", "2026-08-14", "2026-08-15", "2026-08-16", "2026-08-17", "2026-08-18", "2026-08-19", "2026-08-20", "2026-08-21", "2026-08-22", "2026-08-23", "2026-08-24", "2026-08-25", "2026-08-26", "2026-08-27", "2026-08-28", "2026-08-29", "2026-08-30", "2026-08-31", "2026-09-01", "2026-09-02", "2026-09-03", "2026-09-04", "2026-09-05", "2026-09-06", "2026-09-07"], "cumulativeByCampaign": {"clubes": {"Buenos Aires": [34741.17, 62705.7, 98024.75, 127217.67, 157780.64, 183736.25, 218683.77, 250790.26, 286104.36, 320562.86, 354226.79, 381996.08, 408736.9, 437731.35, 470019.96, 508087.65, 537744.76, 568839.36, 599901.28, 624379.32, 656583.62, 690304.1, 733378.77, 763441.96, 797418.26, 826782.46, 847681.09, 875482.11, 914359.51, 950529.58], "Corrientes": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Ciudad Autónoma de Buenos Aires": [5805.39, 10478.37, 16380.32, 21258.57, 26365.77, 30703.05, 36542.92, 41908.04, 47809.17, 53567.31, 59192.69, 63833.05, 68301.54, 73146.63, 78542.19, 84903.44, 89859.27, 95055.3, 100245.86, 104336.24, 109717.71, 115352.53, 122550.48, 127574.15, 133251.73, 138158.6, 141650.85, 146296.51, 152793.07, 158837.23], "Chubut": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "San Juan": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Córdoba": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Misiones": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Santa Fe": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Formosa": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Mendoza": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Catamarca": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Entre Rios": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Neuquén": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Tucuman": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Río Negro": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Salta": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Chaco": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "San Luis": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Santa Cruz": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Santiago del Estero": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "La Rioja": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Jujuy": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "La Pampa": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Tierra del Fuego": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}, "siguecon": {"Buenos Aires": [11297.95, 21556.11, 34668.24, 45324.43, 56523.09, 66074.37, 77410.96, 89504.01, 101328.46, 111411.78, 123115.31, 133002.58, 145489.71, 154953.46, 166569.95, 180170.74, 191453.66, 201419.47, 211973.35, 221257.68, 232600.7, 243833.59, 258022.26, 268219.79, 279655.94, 292226.4, 299529.37, 310197.59, 322340.02, 336035.75], "Corrientes": [788.2, 1503.87, 2418.64, 3162.07, 3943.35, 4609.7, 5400.6, 6244.28, 7069.21, 7772.68, 8589.18, 9278.97, 10150.14, 10810.38, 11620.81, 12569.67, 13356.83, 14052.09, 14788.39, 15436.11, 16227.46, 17011.13, 18001.01, 18712.44, 19510.29, 20387.27, 20896.76, 21641.03, 22488.15, 23443.64], "Ciudad Autónoma de Buenos Aires": [1530.78, 2920.69, 4697.28, 6141.11, 7658.44, 8952.57, 10488.59, 12127.1, 13729.23, 15095.44, 16681.17, 18020.82, 19712.73, 20995.0, 22568.94, 24411.75, 25940.49, 27290.78, 28720.75, 29978.71, 31515.6, 33037.57, 34960.03, 36341.71, 37891.22, 39594.42, 40583.92, 42029.38, 43674.59, 45530.25], "Chubut": [816.32, 1557.51, 2504.91, 3274.86, 4084.0, 4774.12, 5593.23, 6467.0, 7321.36, 8049.91, 8895.53, 9609.93, 10512.17, 11195.96, 12035.29, 13018.0, 13833.23, 14553.3, 15315.86, 15986.68, 16806.26, 17617.88, 18643.06, 19379.87, 20206.17, 21114.44, 21642.1, 22412.92, 23290.26, 24279.82], "San Juan": [842.19, 1606.88, 2584.31, 3378.67, 4213.46, 4925.45, 5770.53, 6671.99, 7553.43, 8305.08, 9177.51, 9914.55, 10845.39, 11550.86, 12416.8, 13430.65, 14271.73, 15014.62, 15801.35, 16493.44, 17338.99, 18176.34, 19234.02, 19994.19, 20846.68, 21783.73, 22328.13, 23123.38, 24028.53, 25049.46], "Córdoba": [4285.81, 8177.18, 13151.18, 17193.54, 21441.68, 25064.9, 29365.36, 33952.79, 38438.32, 42263.36, 46703.02, 50453.7, 55190.61, 58780.63, 63187.27, 68346.64, 72626.75, 76407.21, 80410.76, 83932.72, 88235.62, 92496.75, 97879.13, 101747.5, 106085.73, 110854.25, 113624.59, 117671.51, 122277.67, 127473.06], "Misiones": [853.11, 1627.71, 2617.81, 3422.47, 4268.08, 4989.3, 5845.33, 6758.48, 7651.35, 8412.75, 9296.48, 10043.08, 10985.98, 11700.6, 12577.76, 13604.76, 14456.74, 15209.26, 16006.19, 16707.25, 17563.77, 18411.97, 19483.36, 20253.38, 21116.93, 22066.13, 22617.58, 23423.14, 24340.02, 25374.19], "Santa Fe": [3469.69, 6620.05, 10646.89, 13919.49, 17358.69, 20291.96, 23773.52, 27487.39, 31118.77, 34215.44, 37809.68, 40846.14, 44681.04, 47587.43, 51154.95, 55331.86, 58796.93, 61857.51, 65098.69, 67949.98, 71433.51, 74883.22, 79240.67, 82372.41, 85884.55, 89745.03, 91987.84, 95264.13, 98993.17, 103199.23], "Formosa": [472.44, 901.41, 1449.71, 1895.32, 2363.61, 2763.02, 3237.08, 3742.77, 4237.23, 4658.88, 5148.29, 5561.74, 6083.91, 6479.66, 6965.42, 7534.16, 8005.98, 8422.72, 8864.05, 9252.29, 9726.62, 10196.34, 10789.66, 11216.09, 11694.31, 12219.97, 12525.36, 12971.47, 13479.23, 14051.94], "Mendoza": [2037.77, 3887.99, 6252.98, 8175.0, 10194.85, 11917.58, 13962.32, 16143.5, 18276.23, 20094.92, 22205.84, 23989.17, 26241.43, 27948.37, 30043.59, 32496.71, 34531.77, 36329.27, 38232.83, 39907.41, 41953.31, 43979.34, 46538.5, 48377.79, 50440.48, 52707.77, 54024.98, 55949.16, 58139.25, 60609.5], "Catamarca": [484.45, 924.31, 1486.54, 1943.47, 2423.66, 2833.21, 3319.31, 3837.85, 4344.87, 4777.24, 5279.07, 5703.03, 6238.47, 6644.26, 7142.37, 7725.56, 8209.36, 8636.68, 9089.22, 9487.33, 9973.71, 10455.36, 11063.76, 11501.02, 11991.39, 12530.4, 12843.55, 13300.99, 13821.65, 14408.91], "Entre Rios": [1506.22, 2873.83, 4621.91, 6042.58, 7535.56, 8808.93, 10320.3, 11932.53, 13508.94, 14853.23, 16413.53, 17731.68, 19396.45, 20658.14, 22206.83, 24020.07, 25524.29, 26852.91, 28259.94, 29497.71, 31009.94, 32507.49, 34399.1, 35758.62, 37283.27, 38959.14, 39932.76, 41355.03, 42973.84, 44799.73], "Neuquén": [1290.27, 2461.79, 3959.24, 5176.22, 6455.15, 7545.94, 8840.62, 10221.69, 11572.09, 12723.64, 14060.23, 15189.39, 16615.47, 17696.27, 19022.91, 20576.18, 21864.73, 23002.86, 24208.15, 25268.46, 26563.87, 27846.71, 29467.11, 30631.71, 31937.76, 33373.35, 34207.38, 35425.73, 36812.44, 38376.55], "Tucuman": [1191.07, 2272.52, 3654.84, 4778.25, 5958.85, 6965.78, 8160.92, 9435.81, 10682.38, 11745.39, 12979.22, 14021.57, 15338.0, 16335.7, 17560.35, 18994.19, 20183.67, 21234.3, 22346.92, 23325.71, 24521.53, 25705.74, 27201.55, 28276.61, 29482.24, 30807.46, 31577.37, 32702.05, 33982.14, 35425.99], "Río Negro": [1043.79, 1991.52, 3202.92, 4187.42, 5222.04, 6104.46, 7151.82, 8269.07, 9361.5, 10293.08, 11374.34, 12287.8, 13441.46, 14315.79, 15389.01, 16645.56, 17687.96, 18608.68, 19583.73, 20441.49, 21489.44, 22527.23, 23838.08, 24780.21, 25836.77, 26998.13, 27672.83, 28658.44, 29780.25, 31045.57], "Salta": [950.3, 1813.15, 2916.05, 3812.38, 4754.33, 5557.71, 6511.27, 7528.45, 8523.04, 9371.18, 10355.6, 11187.25, 12237.58, 13033.6, 14010.7, 15154.71, 16103.75, 16942.0, 17829.72, 18610.65, 19564.75, 20509.58, 21703.03, 22560.78, 23522.71, 24580.05, 25194.32, 26091.66, 27112.99, 28264.98], "Chaco": [861.06, 1642.87, 2642.19, 3454.33, 4307.82, 5035.76, 5899.76, 6821.41, 7722.6, 8491.08, 9383.05, 10136.59, 11088.28, 11809.55, 12694.88, 13731.44, 14591.35, 15350.88, 16155.23, 16862.82, 17727.31, 18583.41, 19664.78, 20441.97, 21313.56, 22271.6, 22828.18, 23641.25, 24566.66, 25610.46], "San Luis": [785.1, 1497.94, 2409.1, 3149.6, 3927.8, 4591.52, 5379.3, 6219.65, 7041.33, 7742.02, 8555.3, 9242.37, 10110.1, 10767.74, 11574.97, 12520.09, 13304.14, 13996.66, 14730.06, 15375.23, 16163.45, 16944.03, 17930.0, 18638.63, 19433.33, 20306.85, 20814.34, 21555.67, 22399.45, 23351.17], "Santa Cruz": [644.49, 1229.66, 1977.63, 2585.51, 3224.33, 3769.18, 4415.87, 5105.71, 5780.23, 6355.42, 7023.04, 7587.06, 8299.38, 8839.23, 9501.89, 10277.74, 10921.37, 11489.86, 12091.9, 12621.52, 13268.58, 13909.35, 14718.74, 15300.45, 15952.82, 16669.89, 17086.49, 17695.05, 18387.71, 19168.97], "Santiago del Estero": [636.04, 1213.55, 1951.73, 2551.64, 3182.1, 3719.81, 4358.03, 5038.83, 5704.52, 6272.18, 6931.06, 7487.68, 8190.67, 8723.46, 9377.43, 10143.12, 10778.32, 11339.37, 11933.52, 12456.2, 13094.78, 13727.16, 14525.95, 15100.04, 15743.87, 16451.55, 16862.69, 17463.28, 18146.86, 18917.89], "La Rioja": [543.24, 1036.49, 1666.97, 2179.36, 2717.83, 3177.09, 3722.19, 4303.67, 4872.23, 5357.07, 5919.81, 6395.23, 6995.65, 7450.7, 8009.27, 8663.24, 9205.76, 9684.95, 10192.42, 10638.84, 11184.25, 11724.37, 12406.61, 12896.94, 13446.83, 14051.27, 14402.42, 14915.38, 15499.23, 16157.77], "Jujuy": [534.23, 1019.29, 1639.31, 2143.19, 2672.73, 3124.37, 3660.42, 4232.25, 4791.38, 5268.17, 5821.58, 6289.11, 6879.57, 7327.07, 7876.36, 8519.48, 9053.0, 9524.24, 10023.29, 10462.3, 10998.66, 11529.82, 12200.74, 12682.93, 13223.7, 13818.1, 14163.43, 14667.88, 15242.04, 15889.65], "La Pampa": [520.91, 993.89, 1598.44, 2089.77, 2606.1, 3046.48, 3569.18, 4126.75, 4671.94, 5136.85, 5676.46, 6132.34, 6708.08, 7144.42, 7680.02, 8307.11, 8827.33, 9286.83, 9773.43, 10201.5, 10724.5, 11242.41, 11896.6, 12366.78, 12894.07, 13473.65, 13810.37, 14302.25, 14862.1, 15493.56], "Tierra del Fuego": [306.36, 584.52, 940.07, 1229.03, 1532.69, 1791.69, 2099.09, 2427.01, 2747.64, 3021.06, 3338.42, 3606.52, 3945.13, 4201.75, 4516.74, 4885.54, 5191.49, 5461.73, 5747.91, 5999.67, 6307.24, 6611.84, 6996.58, 7273.1, 7583.2, 7924.07, 8122.1, 8411.38, 8740.63, 9112.01]}, "sueno": {"Buenos Aires": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Corrientes": [8684.36, 14632.79, 24196.63, 31441.85, 37334.97, 42908.59, 50792.92, 59222.97, 66476.69, 74720.48, 82915.62, 89423.8, 94996.38, 101645.9, 108568.31, 118099.11, 125821.5, 132234.22, 139305.26, 145077.01, 152487.78, 160362.12, 171163.59, 179015.99, 183497.33, 190341.44, 196224.74, 203370.47, 210816.98, 220682.3], "Ciudad Autónoma de Buenos Aires": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Chubut": [5637.89, 9499.6, 15708.44, 20412.04, 24237.85, 27856.24, 32974.74, 38447.53, 43156.64, 48508.51, 53828.79, 58053.9, 61671.61, 65988.47, 70482.5, 76669.89, 81683.27, 85846.4, 90436.92, 94183.94, 98995.0, 104107.02, 111119.34, 116217.11, 119126.39, 123569.59, 127389.02, 132028.03, 136862.3, 143266.86], "San Juan": [4558.34, 7680.61, 12700.58, 16503.53, 19596.77, 22522.31, 26660.72, 31085.57, 34892.98, 39220.07, 43521.62, 46937.7, 49862.7, 53352.97, 56986.47, 61989.1, 66042.51, 69408.49, 73120.01, 76149.54, 80039.39, 84172.55, 89842.15, 93963.79, 96316.0, 99908.41, 102996.5, 106747.23, 110655.83, 115834.04], "Córdoba": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Misiones": [3817.9, 6433.0, 10637.54, 13822.75, 16413.54, 18863.87, 22330.04, 26036.14, 29225.09, 32849.3, 36452.12, 39313.31, 41763.17, 44686.49, 47729.79, 51919.8, 55314.79, 58134.01, 61242.65, 63780.08, 67038.06, 70499.85, 75248.5, 78700.64, 80670.77, 83679.64, 86266.11, 89407.58, 92681.28, 97018.36], "Santa Fe": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Formosa": [2822.78, 4756.27, 7864.92, 10219.92, 12135.43, 13947.1, 16509.83, 19249.95, 21607.72, 24287.3, 26951.06, 29066.49, 30877.82, 33039.19, 35289.26, 38387.17, 40897.28, 42981.68, 45280.07, 47156.13, 49564.94, 52124.43, 55635.36, 58187.72, 59644.34, 61868.97, 63781.29, 66103.95, 68524.38, 71731.02], "Mendoza": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Catamarca": [1399.59, 2358.24, 3899.57, 5067.22, 6016.96, 6915.22, 8185.87, 9544.47, 10713.49, 12042.07, 13362.81, 14411.68, 15309.77, 16381.41, 17497.04, 19033.04, 20277.59, 21311.07, 22450.65, 23380.84, 24575.17, 25844.21, 27584.99, 28850.5, 29572.72, 30675.72, 31623.89, 32775.5, 33975.59, 35565.5], "Entre Rios": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Neuquén": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Tucuman": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Río Negro": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Salta": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Chaco": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "San Luis": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Santa Cruz": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Santiago del Estero": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "La Rioja": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Jujuy": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "La Pampa": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Tierra del Fuego": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}, "all": {"Buenos Aires": [46427.66, 84087.55, 134688.76, 175342.68, 215651.04, 250721.64, 296217.61, 342110.75, 387651.13, 431541.12, 477341.53, 515120.61, 554918.62, 592898.63, 636120.3, 688812.36, 731281.65, 770759.18, 811987.06, 846174.28, 889618.08, 934315.38, 992192.37, 1033450.11, 1073934.92, 1116947.67, 1146524.8, 1186343.05, 1234451.71, 1286763.64], "Corrientes": [8810.9, 15957.87, 25560.81, 33275.99, 40925.58, 47581.17, 56215.25, 64924.71, 73567.22, 81896.53, 90588.38, 97757.98, 105310.72, 112518.45, 120720.92, 130720.66, 138780.34, 146272.27, 154096.37, 160584.31, 168828.94, 177311.45, 188295.16, 196124.93, 203808.01, 211970.84, 217583.89, 225140.47, 234270.39, 244197.98], "Ciudad Autónoma de Buenos Aires": [7375.24, 13357.67, 21395.89, 27853.95, 34257.1, 39828.22, 47055.45, 54345.78, 61580.06, 68552.18, 75827.77, 81829.14, 88151.23, 94184.52, 101050.47, 109420.83, 116167.26, 122438.44, 128987.67, 134418.45, 141319.69, 148420.05, 157614.06, 164168.03, 170599.22, 177431.98, 182130.44, 188455.74, 196098.01, 204407.98], "Chubut": [6046.71, 10951.5, 17541.77, 22836.5, 28086.24, 32653.81, 38579.17, 44556.26, 50487.4, 56203.61, 62168.62, 67088.94, 72272.2, 77218.69, 82847.85, 89710.43, 95241.6, 100383.12, 105752.61, 110205.13, 115863.22, 121684.56, 129222.42, 134595.8, 139868.51, 145470.46, 149322.57, 154508.47, 160774.1, 167587.17], "San Juan": [5084.26, 9208.36, 14749.66, 19201.64, 23615.78, 27456.33, 32438.56, 37464.28, 42451.37, 47257.73, 52273.3, 56410.46, 60768.71, 64927.87, 69661.04, 75431.3, 80082.08, 84405.24, 88920.07, 92663.89, 97421.38, 102316.15, 108654.21, 113172.32, 117605.78, 122316.07, 125555.04, 129915.5, 135183.85, 140912.48], "Córdoba": [4596.16, 8324.35, 13333.68, 17358.26, 21348.63, 24820.49, 29324.42, 33867.66, 38375.99, 42720.93, 47255.0, 50994.98, 54934.84, 58694.71, 62973.49, 68189.81, 72394.11, 76302.23, 80383.64, 83768.04, 88068.81, 92493.67, 98223.28, 102307.64, 106315.48, 110573.58, 113501.6, 117443.46, 122206.03, 127384.71], "Misiones": [4416.81, 7999.51, 12813.36, 16680.89, 20515.55, 23851.92, 28180.09, 32546.05, 36878.44, 41053.83, 45410.97, 49005.01, 52791.11, 56404.27, 60516.08, 65528.84, 69569.07, 73324.69, 77246.83, 80499.16, 84632.1, 88884.29, 94390.31, 98315.29, 102166.73, 106258.66, 109072.43, 112860.46, 117437.19, 122413.78], "Santa Fe": [3720.95, 6739.2, 10794.63, 14052.84, 17283.36, 20094.09, 23740.37, 27418.48, 31068.31, 34585.88, 38256.55, 41284.36, 44473.97, 47517.88, 50981.88, 55204.89, 58608.59, 61772.52, 65076.73, 67816.66, 71298.47, 74880.73, 79519.29, 82825.89, 86070.55, 89517.8, 91888.27, 95079.5, 98935.17, 103127.71], "Formosa": [3095.82, 5606.99, 8981.1, 11691.92, 14379.7, 16718.22, 19751.91, 22812.08, 25848.73, 28775.34, 31829.33, 34348.45, 37002.2, 39534.72, 42416.76, 45930.29, 48762.16, 51394.53, 54143.63, 56423.24, 59320.09, 62300.53, 66159.79, 68910.87, 71610.41, 74478.52, 76450.74, 79105.83, 82313.74, 85801.92], "Mendoza": [2185.33, 3957.97, 6339.75, 8253.32, 10150.61, 11801.37, 13942.85, 16103.03, 18246.6, 20312.48, 22468.29, 24246.54, 26119.81, 27907.52, 29941.95, 32422.14, 34421.16, 36279.35, 38219.93, 39829.11, 41873.99, 43977.88, 46702.13, 48644.12, 50549.72, 52574.31, 53966.5, 55840.73, 58105.19, 60567.49], "Catamarca": [1803.28, 3266.01, 5231.39, 6810.41, 8376.01, 9738.18, 11505.27, 13287.78, 15056.6, 16761.31, 18540.23, 20007.59, 21553.36, 23028.53, 24707.29, 26753.88, 28403.41, 29936.74, 31538.05, 32865.91, 34553.29, 36289.36, 38537.33, 40139.81, 41712.26, 43382.9, 44531.7, 46078.26, 47946.83, 49978.65], "Entre Rios": [1615.3, 2925.55, 4686.05, 6100.47, 7502.86, 8723.03, 10305.91, 11902.61, 13487.04, 15014.05, 16607.52, 17921.92, 19306.56, 20627.95, 22131.7, 23964.95, 25442.53, 26816.02, 28250.4, 29439.83, 30951.32, 32506.41, 34520.05, 35955.48, 37364.01, 38860.5, 39889.54, 41274.88, 42948.66, 44768.68], "Neuquén": [1383.7, 2506.1, 4014.18, 5225.81, 6427.14, 7472.36, 8828.3, 10196.07, 11553.33, 12861.4, 14226.41, 15352.35, 16538.47, 17670.4, 18958.56, 20528.96, 21794.69, 22971.25, 24199.99, 25218.88, 26513.66, 27845.79, 29570.72, 30800.34, 32006.93, 33288.85, 34170.35, 35357.07, 36790.87, 38349.95], "Tucuman": [1277.32, 2313.42, 3705.56, 4824.03, 5932.99, 6897.85, 8149.54, 9412.15, 10665.06, 11872.56, 13132.62, 14172.0, 15266.92, 16311.83, 17500.94, 18950.6, 20119.02, 21205.12, 22339.39, 23279.94, 24475.17, 25704.88, 27297.19, 28432.28, 29546.09, 30729.46, 31543.19, 32638.67, 33962.23, 35401.44], "Río Negro": [1119.38, 2027.36, 3247.37, 4227.54, 5199.38, 6044.93, 7141.85, 8248.34, 9346.32, 10404.52, 11508.77, 12419.63, 13379.17, 14294.87, 15336.95, 16607.36, 17631.3, 18583.11, 19577.12, 20401.38, 21448.82, 22526.48, 23921.9, 24916.63, 25892.72, 26929.77, 27642.88, 28602.9, 29762.81, 31024.05], "Salta": [1019.12, 1845.78, 2956.52, 3848.9, 4733.7, 5503.52, 6502.19, 7509.58, 8509.22, 9472.64, 10477.99, 11307.27, 12180.87, 13014.55, 13963.3, 15119.93, 16052.16, 16918.72, 17823.7, 18574.14, 19527.76, 20508.9, 21779.34, 22684.98, 23573.65, 24517.81, 25167.05, 26041.09, 27097.11, 28245.39], "Chaco": [923.41, 1672.43, 2678.85, 3487.43, 4289.13, 4986.66, 5891.53, 6804.31, 7710.07, 8583.01, 9493.95, 10245.34, 11036.89, 11792.29, 12651.93, 13699.93, 14544.61, 15329.79, 16149.78, 16829.74, 17693.8, 18582.8, 19733.92, 20554.51, 21359.72, 22215.21, 22803.47, 23595.43, 24552.27, 25592.71], "San Luis": [841.95, 1524.9, 2442.53, 3179.77, 3910.75, 4546.74, 5371.8, 6204.05, 7029.91, 7825.84, 8656.41, 9341.52, 10063.24, 10752.0, 11535.81, 12491.36, 13261.52, 13977.43, 14725.09, 15345.06, 16132.9, 16943.47, 17993.04, 18741.24, 19475.41, 20255.43, 20791.8, 21513.89, 22386.33, 23334.98], "Santa Cruz": [691.16, 1251.79, 2005.07, 2610.28, 3210.34, 3732.42, 4409.71, 5092.91, 5770.85, 6424.23, 7106.05, 7668.46, 8260.92, 8826.32, 9469.74, 10254.16, 10886.38, 11474.08, 12087.82, 12596.76, 13243.49, 13908.89, 14770.49, 15384.68, 15987.37, 16627.69, 17067.99, 17660.76, 18376.94, 19155.69], "Santiago del Estero": [682.1, 1235.39, 1978.81, 2576.09, 3168.29, 3683.53, 4351.95, 5026.2, 5695.27, 6340.09, 7012.97, 7568.01, 8152.71, 8710.71, 9345.71, 10119.84, 10743.79, 11323.79, 11929.49, 12431.76, 13070.03, 13726.71, 14577.02, 15183.17, 15777.96, 16409.89, 16844.43, 17429.43, 18136.23, 18904.78], "La Rioja": [582.58, 1055.15, 1690.1, 2200.24, 2706.03, 3146.11, 3717.0, 4292.88, 4864.33, 5415.07, 5989.78, 6463.84, 6963.23, 7439.81, 7982.17, 8643.36, 9176.27, 9671.64, 10188.98, 10617.97, 11163.11, 11723.98, 12450.23, 12967.94, 13475.96, 14015.69, 14386.83, 14886.48, 15490.15, 16146.57], "Jujuy": [572.92, 1037.64, 1662.06, 2163.73, 2661.13, 3093.9, 3655.32, 4221.64, 4783.61, 5325.21, 5890.39, 6356.58, 6847.69, 7316.36, 7849.71, 8499.93, 9024.0, 9511.15, 10019.91, 10441.78, 10977.87, 11529.43, 12243.64, 12752.76, 13252.34, 13783.11, 14148.1, 14639.45, 15233.11, 15878.64], "La Pampa": [558.64, 1011.77, 1620.63, 2109.79, 2594.79, 3016.78, 3564.2, 4116.41, 4664.36, 5192.47, 5743.55, 6198.13, 6676.99, 7133.98, 7654.04, 8288.05, 8799.06, 9274.07, 9770.14, 10181.49, 10704.22, 11242.04, 11938.43, 12434.86, 12921.99, 13439.54, 13795.42, 14274.53, 14853.39, 15482.83], "Tierra del Fuego": [328.54, 595.04, 953.12, 1240.8, 1526.04, 1774.21, 2096.16, 2420.92, 2743.19, 3053.77, 3377.87, 3645.22, 3926.84, 4195.61, 4501.46, 4874.33, 5174.86, 5454.22, 5745.97, 5987.89, 6295.32, 6611.62, 7021.18, 7313.14, 7599.63, 7904.0, 8113.3, 8395.08, 8735.51, 9105.69]}}, "leadsByCampaign": {"clubes": {"total": 238, "cpl": 4660.8}, "siguecon": {"total": 154, "cpl": 7270.7}, "sueno": {"total": 33, "cpl": 20727.35}, "all": {"total": 425, "cpl": 6854.03}}};
+const DATA = {"regionByCampaign": {"clubes": {"Buenos Aires": {"spend": 950050.79, "clicks": 2373, "impressions": 142485, "reach": 64973, "cpc": 400.36, "ctr": 1.665}, "Ciudad Autónoma de Buenos Aires": {"spend": 154454.27, "clicks": 288, "impressions": 11070, "reach": 6420, "cpc": 536.3, "ctr": 2.602}, "Córdoba": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Santa Fe": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Mendoza": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Entre Rios": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Neuquén": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Tucuman": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Río Negro": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Salta": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Misiones": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Chaco": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Corrientes": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Chubut": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "San Juan": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "San Luis": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Santiago del Estero": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Santa Cruz": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Formosa": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "La Rioja": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Jujuy": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "La Pampa": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Catamarca": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Tierra del Fuego": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}}, "siguecon": {"Buenos Aires": {"spend": 341124.62, "clicks": 342, "impressions": 65625, "reach": 34415, "cpc": 997.44, "ctr": 0.521}, "Córdoba": {"spend": 122507.95, "clicks": 116, "impressions": 24906, "reach": 12251, "cpc": 1056.1, "ctr": 0.466}, "Santa Fe": {"spend": 103562.92, "clicks": 122, "impressions": 21617, "reach": 10740, "cpc": 848.88, "ctr": 0.564}, "Mendoza": {"spend": 57823.02, "clicks": 60, "impressions": 12589, "reach": 6090, "cpc": 963.72, "ctr": 0.477}, "Ciudad Autónoma de Buenos Aires": {"spend": 46522.87, "clicks": 52, "impressions": 6620, "reach": 3947, "cpc": 894.67, "ctr": 0.785}, "Entre Rios": {"spend": 43877.22, "clicks": 43, "impressions": 9753, "reach": 4719, "cpc": 1020.4, "ctr": 0.441}, "Neuquén": {"spend": 37542.7, "clicks": 19, "impressions": 5698, "reach": 2869, "cpc": 1975.93, "ctr": 0.333}, "Tucuman": {"spend": 34381.62, "clicks": 31, "impressions": 6910, "reach": 3617, "cpc": 1109.08, "ctr": 0.449}, "Río Negro": {"spend": 29792.44, "clicks": 21, "impressions": 6179, "reach": 3158, "cpc": 1418.69, "ctr": 0.34}, "Salta": {"spend": 28394.19, "clicks": 39, "impressions": 6166, "reach": 3136, "cpc": 728.06, "ctr": 0.633}, "Misiones": {"spend": 26529.79, "clicks": 23, "impressions": 6565, "reach": 3353, "cpc": 1153.47, "ctr": 0.35}, "Chaco": {"spend": 26372.02, "clicks": 39, "impressions": 6456, "reach": 3441, "cpc": 676.21, "ctr": 0.604}, "Corrientes": {"spend": 24911.42, "clicks": 28, "impressions": 5518, "reach": 3057, "cpc": 889.69, "ctr": 0.507}, "Chubut": {"spend": 24594.05, "clicks": 30, "impressions": 5208, "reach": 2610, "cpc": 819.8, "ctr": 0.576}, "San Juan": {"spend": 23282.4, "clicks": 24, "impressions": 5883, "reach": 2950, "cpc": 970.1, "ctr": 0.408}, "San Luis": {"spend": 20768.92, "clicks": 16, "impressions": 4642, "reach": 2299, "cpc": 1298.06, "ctr": 0.345}, "Santiago del Estero": {"spend": 20327.13, "clicks": 20, "impressions": 4295, "reach": 2167, "cpc": 1016.36, "ctr": 0.466}, "Santa Cruz": {"spend": 17077.16, "clicks": 15, "impressions": 3917, "reach": 1794, "cpc": 1138.48, "ctr": 0.383}, "Formosa": {"spend": 16434.8, "clicks": 14, "impressions": 2944, "reach": 1507, "cpc": 1173.91, "ctr": 0.476}, "La Rioja": {"spend": 15879.13, "clicks": 10, "impressions": 3768, "reach": 1677, "cpc": 1587.91, "ctr": 0.265}, "Jujuy": {"spend": 15834.99, "clicks": 23, "impressions": 3230, "reach": 1709, "cpc": 688.48, "ctr": 0.712}, "La Pampa": {"spend": 14997.75, "clicks": 16, "impressions": 3446, "reach": 1682, "cpc": 937.36, "ctr": 0.464}, "Catamarca": {"spend": 14829.59, "clicks": 7, "impressions": 3410, "reach": 1695, "cpc": 2118.51, "ctr": 0.205}, "Tierra del Fuego": {"spend": 9434.38, "clicks": 12, "impressions": 1701, "reach": 835, "cpc": 786.2, "ctr": 0.705}}, "sueno": {"Corrientes": {"spend": 214917.35, "clicks": 292, "impressions": 78949, "reach": 20998, "cpc": 736.02, "ctr": 0.37}, "Chubut": {"spend": 134579.69, "clicks": 166, "impressions": 46647, "reach": 11803, "cpc": 810.72, "ctr": 0.356}, "San Juan": {"spend": 109126.99, "clicks": 109, "impressions": 32849, "reach": 9441, "cpc": 1001.17, "ctr": 0.332}, "Misiones": {"spend": 102635.48, "clicks": 115, "impressions": 30271, "reach": 8980, "cpc": 892.48, "ctr": 0.38}, "Formosa": {"spend": 75047.23, "clicks": 92, "impressions": 27568, "reach": 7489, "cpc": 815.73, "ctr": 0.334}, "Catamarca": {"spend": 34785.9, "clicks": 53, "impressions": 12728, "reach": 3320, "cpc": 656.34, "ctr": 0.416}, "Buenos Aires": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Ciudad Autónoma de Buenos Aires": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Córdoba": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Santa Fe": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Mendoza": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Entre Rios": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Neuquén": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Tucuman": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Río Negro": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Salta": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Chaco": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "San Luis": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Santiago del Estero": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Santa Cruz": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "La Rioja": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Jujuy": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "La Pampa": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}, "Tierra del Fuego": {"spend": 0, "clicks": 0, "impressions": 0, "reach": 0, "cpc": 0, "ctr": 0}}, "all": {"Buenos Aires": {"spend": 1291175.41, "clicks": 2715, "impressions": 208110, "reach": 99388, "cpc": 475.57, "ctr": 1.305}, "Corrientes": {"spend": 239828.77, "clicks": 320, "impressions": 84467, "reach": 24055, "cpc": 749.46, "ctr": 0.379}, "Ciudad Autónoma de Buenos Aires": {"spend": 200977.14, "clicks": 340, "impressions": 17690, "reach": 10367, "cpc": 591.11, "ctr": 1.922}, "Chubut": {"spend": 159173.74, "clicks": 196, "impressions": 51855, "reach": 14413, "cpc": 812.11, "ctr": 0.378}, "San Juan": {"spend": 132409.39, "clicks": 133, "impressions": 38732, "reach": 12391, "cpc": 995.56, "ctr": 0.343}, "Misiones": {"spend": 129165.27, "clicks": 138, "impressions": 36836, "reach": 12333, "cpc": 935.98, "ctr": 0.375}, "Córdoba": {"spend": 122507.95, "clicks": 116, "impressions": 24906, "reach": 12251, "cpc": 1056.1, "ctr": 0.466}, "Santa Fe": {"spend": 103562.92, "clicks": 122, "impressions": 21617, "reach": 10740, "cpc": 848.88, "ctr": 0.564}, "Formosa": {"spend": 91482.03, "clicks": 106, "impressions": 30512, "reach": 8996, "cpc": 863.04, "ctr": 0.347}, "Mendoza": {"spend": 57823.02, "clicks": 60, "impressions": 12589, "reach": 6090, "cpc": 963.72, "ctr": 0.477}, "Catamarca": {"spend": 49615.49, "clicks": 60, "impressions": 16138, "reach": 5015, "cpc": 826.92, "ctr": 0.372}, "Entre Rios": {"spend": 43877.22, "clicks": 43, "impressions": 9753, "reach": 4719, "cpc": 1020.4, "ctr": 0.441}, "Neuquén": {"spend": 37542.7, "clicks": 19, "impressions": 5698, "reach": 2869, "cpc": 1975.93, "ctr": 0.333}, "Tucuman": {"spend": 34381.62, "clicks": 31, "impressions": 6910, "reach": 3617, "cpc": 1109.08, "ctr": 0.449}, "Río Negro": {"spend": 29792.44, "clicks": 21, "impressions": 6179, "reach": 3158, "cpc": 1418.69, "ctr": 0.34}, "Salta": {"spend": 28394.19, "clicks": 39, "impressions": 6166, "reach": 3136, "cpc": 728.06, "ctr": 0.633}, "Chaco": {"spend": 26372.02, "clicks": 39, "impressions": 6456, "reach": 3441, "cpc": 676.21, "ctr": 0.604}, "San Luis": {"spend": 20768.92, "clicks": 16, "impressions": 4642, "reach": 2299, "cpc": 1298.06, "ctr": 0.345}, "Santiago del Estero": {"spend": 20327.13, "clicks": 20, "impressions": 4295, "reach": 2167, "cpc": 1016.36, "ctr": 0.466}, "Santa Cruz": {"spend": 17077.16, "clicks": 15, "impressions": 3917, "reach": 1794, "cpc": 1138.48, "ctr": 0.383}, "La Rioja": {"spend": 15879.13, "clicks": 10, "impressions": 3768, "reach": 1677, "cpc": 1587.91, "ctr": 0.265}, "Jujuy": {"spend": 15834.99, "clicks": 23, "impressions": 3230, "reach": 1709, "cpc": 688.48, "ctr": 0.712}, "La Pampa": {"spend": 14997.75, "clicks": 16, "impressions": 3446, "reach": 1682, "cpc": 937.36, "ctr": 0.464}, "Tierra del Fuego": {"spend": 9434.38, "clicks": 12, "impressions": 1701, "reach": 835, "cpc": 786.2, "ctr": 0.705}}}, "ageByCampaign": {"clubes": {"byAge": [["25-34", {"spend": 358833.35, "clicks": 994, "impressions": 84497, "female": 296, "male": 698, "cpc": 361.0}], ["35-44", {"spend": 233195.36, "clicks": 523, "impressions": 35535, "female": 113, "male": 410, "cpc": 445.88}], ["45-54", {"spend": 160291.49, "clicks": 381, "impressions": 17388, "female": 66, "male": 315, "cpc": 420.71}], ["55-64", {"spend": 103373.07, "clicks": 218, "impressions": 6475, "female": 41, "male": 177, "cpc": 474.19}], ["65+", {"spend": 235701.07, "clicks": 524, "impressions": 8300, "female": 267, "male": 257, "cpc": 449.81}]], "gender": {"female": 783, "male": 1857}}, "siguecon": {"byAge": [["25-34", {"spend": 140985.52, "clicks": 164, "impressions": 42571, "female": 43, "male": 121, "cpc": 859.67}], ["35-44", {"spend": 313866.0, "clicks": 334, "impressions": 75107, "female": 55, "male": 279, "cpc": 939.72}], ["45-54", {"spend": 386501.04, "clicks": 349, "impressions": 72393, "female": 66, "male": 283, "cpc": 1107.45}], ["55-64", {"spend": 198101.21, "clicks": 184, "impressions": 27232, "female": 32, "male": 152, "cpc": 1076.64}], ["65+", {"spend": 66512.77, "clicks": 78, "impressions": 7822, "female": 10, "male": 68, "cpc": 852.73}]], "gender": {"female": 206, "male": 903}}, "sueno": {"byAge": [["25-34", {"spend": 184023.14, "clicks": 437, "impressions": 120481, "female": 99, "male": 338, "cpc": 421.11}], ["35-44", {"spend": 183705.2, "clicks": 147, "impressions": 63374, "female": 19, "male": 128, "cpc": 1249.7}], ["45-54", {"spend": 180149.57, "clicks": 128, "impressions": 29814, "female": 26, "male": 102, "cpc": 1407.42}], ["55-64", {"spend": 75636.59, "clicks": 57, "impressions": 9445, "female": 10, "male": 47, "cpc": 1326.96}], ["65+", {"spend": 41899.79, "clicks": 54, "impressions": 4821, "female": 26, "male": 28, "cpc": 775.92}]], "gender": {"female": 180, "male": 643}}, "all": {"byAge": [["25-34", {"spend": 683842.01, "clicks": 1595, "impressions": 247549, "female": 438, "male": 1157, "cpc": 428.74}], ["35-44", {"spend": 730766.56, "clicks": 1004, "impressions": 174016, "female": 187, "male": 817, "cpc": 727.86}], ["45-54", {"spend": 726942.1, "clicks": 858, "impressions": 119595, "female": 158, "male": 700, "cpc": 847.25}], ["55-64", {"spend": 377110.87, "clicks": 459, "impressions": 43152, "female": 83, "male": 376, "cpc": 821.59}], ["65+", {"spend": 344113.63, "clicks": 656, "impressions": 20943, "female": 303, "male": 353, "cpc": 524.56}]], "gender": {"female": 1169, "male": 3403}}}, "dailyByCampaign": {"clubes": [{"date": "2026-08-16", "spend": 37471.61, "clicks": 93, "leads": 5, "cpc": 402.92}, {"date": "2026-08-17", "spend": 41215.23, "clicks": 84, "leads": 4, "cpc": 490.66}, {"date": "2026-08-18", "spend": 40216.64, "clicks": 92, "leads": 9, "cpc": 437.14}, {"date": "2026-08-19", "spend": 39289.31, "clicks": 99, "leads": 9, "cpc": 396.86}, {"date": "2026-08-20", "spend": 32409.65, "clicks": 73, "leads": 12, "cpc": 443.97}, {"date": "2026-08-21", "spend": 31209.31, "clicks": 63, "leads": 9, "cpc": 495.39}, {"date": "2026-08-22", "spend": 33839.54, "clicks": 71, "leads": 11, "cpc": 476.61}, {"date": "2026-08-23", "spend": 37684.17, "clicks": 76, "leads": 8, "cpc": 495.84}, {"date": "2026-08-24", "spend": 44428.94, "clicks": 98, "leads": 3, "cpc": 453.36}, {"date": "2026-08-25", "spend": 34612.94, "clicks": 93, "leads": 7, "cpc": 372.18}, {"date": "2026-08-26", "spend": 36290.63, "clicks": 69, "leads": 8, "cpc": 525.95}, {"date": "2026-08-27", "spend": 36252.48, "clicks": 81, "leads": 5, "cpc": 447.56}, {"date": "2026-08-28", "spend": 28568.42, "clicks": 59, "leads": 7, "cpc": 484.21}, {"date": "2026-08-29", "spend": 37585.77, "clicks": 69, "leads": 8, "cpc": 544.72}, {"date": "2026-08-30", "spend": 39355.3, "clicks": 86, "leads": 8, "cpc": 457.62}, {"date": "2026-08-31", "spend": 50272.62, "clicks": 112, "leads": 13, "cpc": 448.86}, {"date": "2026-09-01", "spend": 35086.86, "clicks": 70, "leads": 5, "cpc": 501.24}, {"date": "2026-09-02", "spend": 39653.88, "clicks": 102, "leads": 15, "cpc": 388.76}, {"date": "2026-09-03", "spend": 34271.07, "clicks": 101, "leads": 5, "cpc": 339.32}, {"date": "2026-09-04", "spend": 24390.88, "clicks": 69, "leads": 5, "cpc": 353.49}, {"date": "2026-09-05", "spend": 32446.68, "clicks": 89, "leads": 9, "cpc": 364.57}, {"date": "2026-09-06", "spend": 45373.96, "clicks": 100, "leads": 8, "cpc": 453.74}, {"date": "2026-09-07", "spend": 42214.23, "clicks": 106, "leads": 9, "cpc": 398.25}, {"date": "2026-09-08", "spend": 35154.91, "clicks": 108, "leads": 4, "cpc": 325.51}, {"date": "2026-09-09", "spend": 33609.38, "clicks": 95, "leads": 5, "cpc": 353.78}, {"date": "2026-09-10", "spend": 36523.14, "clicks": 76, "leads": 3, "cpc": 480.57}, {"date": "2026-09-11", "spend": 32024.27, "clicks": 89, "leads": 7, "cpc": 359.82}, {"date": "2026-09-12", "spend": 30523.14, "clicks": 87, "leads": 9, "cpc": 350.84}, {"date": "2026-09-13", "spend": 43248.15, "clicks": 130, "leads": 5, "cpc": 332.68}, {"date": "2026-09-14", "spend": 39377.71, "clicks": 121, "leads": 4, "cpc": 325.44}], "siguecon": [{"date": "2026-08-16", "spend": 40344.39, "clicks": 45, "leads": 8, "cpc": 896.54}, {"date": "2026-08-17", "spend": 39448.29, "clicks": 40, "leads": 3, "cpc": 986.21}, {"date": "2026-08-18", "spend": 33639.6, "clicks": 32, "leads": 2, "cpc": 1051.24}, {"date": "2026-08-19", "spend": 39044.86, "clicks": 40, "leads": 7, "cpc": 976.12}, {"date": "2026-08-20", "spend": 32985.56, "clicks": 35, "leads": 3, "cpc": 942.44}, {"date": "2026-08-21", "spend": 41659.09, "clicks": 53, "leads": 4, "cpc": 786.02}, {"date": "2026-08-22", "spend": 31572.64, "clicks": 33, "leads": 5, "cpc": 956.75}, {"date": "2026-08-23", "spend": 38754.49, "clicks": 28, "leads": 3, "cpc": 1384.09}, {"date": "2026-08-24", "spend": 45374.46, "clicks": 54, "leads": 5, "cpc": 840.27}, {"date": "2026-08-25", "spend": 37641.67, "clicks": 33, "leads": 4, "cpc": 1140.66}, {"date": "2026-08-26", "spend": 33247.54, "clicks": 23, "leads": 1, "cpc": 1445.55}, {"date": "2026-08-27", "spend": 35209.47, "clicks": 38, "leads": 9, "cpc": 926.57}, {"date": "2026-08-28", "spend": 30974.06, "clicks": 41, "leads": 8, "cpc": 755.46}, {"date": "2026-08-29", "spend": 37842.14, "clicks": 38, "leads": 6, "cpc": 995.85}, {"date": "2026-08-30", "spend": 37474.77, "clicks": 33, "leads": 4, "cpc": 1135.6}, {"date": "2026-08-31", "spend": 47335.7, "clicks": 47, "leads": 6, "cpc": 1007.14}, {"date": "2026-09-01", "spend": 34020.62, "clicks": 29, "leads": 4, "cpc": 1173.12}, {"date": "2026-09-02", "spend": 38152.87, "clicks": 42, "leads": 9, "cpc": 908.4}, {"date": "2026-09-03", "spend": 41937.1, "clicks": 40, "leads": 2, "cpc": 1048.43}, {"date": "2026-09-04", "spend": 24363.92, "clicks": 39, "leads": 3, "cpc": 624.72}, {"date": "2026-09-05", "spend": 35590.9, "clicks": 47, "leads": 5, "cpc": 757.25}, {"date": "2026-09-06", "spend": 40509.14, "clicks": 50, "leads": 4, "cpc": 810.18}, {"date": "2026-09-07", "spend": 45691.19, "clicks": 33, "leads": 4, "cpc": 1384.58}, {"date": "2026-09-08", "spend": 37433.6, "clicks": 37, "leads": 7, "cpc": 1011.72}, {"date": "2026-09-09", "spend": 39198.24, "clicks": 48, "leads": 7, "cpc": 816.63}, {"date": "2026-09-10", "spend": 35319.97, "clicks": 23, "leads": 0, "cpc": 1535.65}, {"date": "2026-09-11", "spend": 27606.07, "clicks": 21, "leads": 3, "cpc": 1314.57}, {"date": "2026-09-12", "spend": 32591.39, "clicks": 25, "leads": 2, "cpc": 1303.66}, {"date": "2026-09-13", "spend": 31364.29, "clicks": 27, "leads": 0, "cpc": 1161.64}, {"date": "2026-09-14", "spend": 52015.56, "clicks": 48, "leads": 5, "cpc": 1083.66}], "sueno": [{"date": "2026-08-16", "spend": 26132.51, "clicks": 47, "leads": 0, "cpc": 556.01}, {"date": "2026-08-17", "spend": 22485.97, "clicks": 37, "leads": 0, "cpc": 607.73}, {"date": "2026-08-18", "spend": 25555.13, "clicks": 39, "leads": 3, "cpc": 655.26}, {"date": "2026-08-19", "spend": 25404.3, "clicks": 30, "leads": 0, "cpc": 846.81}, {"date": "2026-08-20", "spend": 20174.85, "clicks": 24, "leads": 0, "cpc": 840.62}, {"date": "2026-08-21", "spend": 17274.57, "clicks": 13, "leads": 0, "cpc": 1328.81}, {"date": "2026-08-22", "spend": 20612.98, "clicks": 17, "leads": 0, "cpc": 1212.53}, {"date": "2026-08-23", "spend": 21458.95, "clicks": 31, "leads": 2, "cpc": 692.22}, {"date": "2026-08-24", "spend": 29544.73, "clicks": 34, "leads": 2, "cpc": 868.96}, {"date": "2026-08-25", "spend": 23938.84, "clicks": 29, "leads": 0, "cpc": 825.48}, {"date": "2026-08-26", "spend": 19878.92, "clicks": 23, "leads": 1, "cpc": 864.3}, {"date": "2026-08-27", "spend": 21919.69, "clicks": 29, "leads": 1, "cpc": 755.85}, {"date": "2026-08-28", "spend": 17891.97, "clicks": 19, "leads": 1, "cpc": 941.68}, {"date": "2026-08-29", "spend": 22972.81, "clicks": 32, "leads": 2, "cpc": 717.9}, {"date": "2026-08-30", "spend": 24409.84, "clicks": 34, "leads": 1, "cpc": 717.94}, {"date": "2026-08-31", "spend": 33483.75, "clicks": 63, "leads": 4, "cpc": 531.49}, {"date": "2026-09-01", "spend": 24341.81, "clicks": 15, "leads": 0, "cpc": 1622.79}, {"date": "2026-09-02", "spend": 13891.81, "clicks": 17, "leads": 0, "cpc": 817.17}, {"date": "2026-09-03", "spend": 21216.22, "clicks": 32, "leads": 0, "cpc": 663.01}, {"date": "2026-09-04", "spend": 18237.77, "clicks": 30, "leads": 2, "cpc": 607.93}, {"date": "2026-09-05", "spend": 22151.22, "clicks": 24, "leads": 1, "cpc": 922.97}, {"date": "2026-09-06", "spend": 23083.59, "clicks": 30, "leads": 0, "cpc": 769.45}, {"date": "2026-09-07", "spend": 30582.4, "clicks": 16, "leads": 2, "cpc": 1911.4}, {"date": "2026-09-08", "spend": 31627.37, "clicks": 17, "leads": 0, "cpc": 1860.43}, {"date": "2026-09-09", "spend": 4138.99, "clicks": 3, "leads": 0, "cpc": 1379.66}, {"date": "2026-09-10", "spend": 19229.33, "clicks": 19, "leads": 0, "cpc": 1012.07}, {"date": "2026-09-11", "spend": 21175.27, "clicks": 16, "leads": 1, "cpc": 1323.45}, {"date": "2026-09-12", "spend": 27860.57, "clicks": 25, "leads": 1, "cpc": 1114.42}, {"date": "2026-09-13", "spend": 24409.36, "clicks": 55, "leads": 3, "cpc": 443.81}, {"date": "2026-09-14", "spend": 16104.9, "clicks": 27, "leads": 0, "cpc": 596.48}], "all": [{"date": "2026-08-16", "spend": 103948.51, "clicks": 185, "leads": 13, "cpc": 561.88}, {"date": "2026-08-17", "spend": 103149.49, "clicks": 161, "leads": 7, "cpc": 640.68}, {"date": "2026-08-18", "spend": 99411.37, "clicks": 163, "leads": 14, "cpc": 609.89}, {"date": "2026-08-19", "spend": 103738.47, "clicks": 169, "leads": 16, "cpc": 613.84}, {"date": "2026-08-20", "spend": 85570.06, "clicks": 132, "leads": 15, "cpc": 648.26}, {"date": "2026-08-21", "spend": 90142.97, "clicks": 129, "leads": 13, "cpc": 698.78}, {"date": "2026-08-22", "spend": 86025.16, "clicks": 121, "leads": 16, "cpc": 710.95}, {"date": "2026-08-23", "spend": 97897.61, "clicks": 135, "leads": 13, "cpc": 725.17}, {"date": "2026-08-24", "spend": 119348.13, "clicks": 186, "leads": 10, "cpc": 641.66}, {"date": "2026-08-25", "spend": 96193.45, "clicks": 155, "leads": 11, "cpc": 620.6}, {"date": "2026-08-26", "spend": 89417.09, "clicks": 115, "leads": 10, "cpc": 777.54}, {"date": "2026-08-27", "spend": 93381.64, "clicks": 148, "leads": 15, "cpc": 630.96}, {"date": "2026-08-28", "spend": 77434.45, "clicks": 119, "leads": 16, "cpc": 650.71}, {"date": "2026-08-29", "spend": 98400.72, "clicks": 139, "leads": 16, "cpc": 707.92}, {"date": "2026-08-30", "spend": 101239.91, "clicks": 153, "leads": 13, "cpc": 661.7}, {"date": "2026-08-31", "spend": 131092.07, "clicks": 222, "leads": 23, "cpc": 590.5}, {"date": "2026-09-01", "spend": 93449.29, "clicks": 114, "leads": 9, "cpc": 819.73}, {"date": "2026-09-02", "spend": 91698.56, "clicks": 161, "leads": 24, "cpc": 569.56}, {"date": "2026-09-03", "spend": 97424.39, "clicks": 173, "leads": 7, "cpc": 563.15}, {"date": "2026-09-04", "spend": 66992.57, "clicks": 138, "leads": 10, "cpc": 485.45}, {"date": "2026-09-05", "spend": 90188.8, "clicks": 160, "leads": 15, "cpc": 563.68}, {"date": "2026-09-06", "spend": 108966.69, "clicks": 180, "leads": 12, "cpc": 605.37}, {"date": "2026-09-07", "spend": 118487.82, "clicks": 155, "leads": 15, "cpc": 764.44}, {"date": "2026-09-08", "spend": 104215.88, "clicks": 162, "leads": 11, "cpc": 643.31}, {"date": "2026-09-09", "spend": 76946.61, "clicks": 146, "leads": 12, "cpc": 527.03}, {"date": "2026-09-10", "spend": 91072.44, "clicks": 118, "leads": 3, "cpc": 771.8}, {"date": "2026-09-11", "spend": 80805.61, "clicks": 126, "leads": 11, "cpc": 641.31}, {"date": "2026-09-12", "spend": 90975.1, "clicks": 137, "leads": 12, "cpc": 664.05}, {"date": "2026-09-13", "spend": 99021.8, "clicks": 212, "leads": 8, "cpc": 467.08}, {"date": "2026-09-14", "spend": 107498.17, "clicks": 196, "leads": 9, "cpc": 548.46}]}, "deltas": {"clubes": {"spend_pct": 0.7, "clicks_pct": 20.6, "cpc_pct": -16.6, "leads_pct": -6.2}, "siguecon": {"spend_pct": 1.4, "clicks_pct": -1.8, "cpc_pct": 3.3, "leads_pct": -15.3}, "sueno": {"spend_pct": -2.4, "clicks_pct": -11.2, "cpc_pct": 9.9, "leads_pct": 7.7}, "all": {"spend_pct": 0.2, "clicks_pct": 8.6, "cpc_pct": -7.7, "leads_pct": -8.6}}, "timelineDates": ["2026-08-16", "2026-08-17", "2026-08-18", "2026-08-19", "2026-08-20", "2026-08-21", "2026-08-22", "2026-08-23", "2026-08-24", "2026-08-25", "2026-08-26", "2026-08-27", "2026-08-28", "2026-08-29", "2026-08-30", "2026-08-31", "2026-09-01", "2026-09-02", "2026-09-03", "2026-09-04", "2026-09-05", "2026-09-06", "2026-09-07", "2026-09-08", "2026-09-09", "2026-09-10", "2026-09-11", "2026-09-12", "2026-09-13", "2026-09-14"], "cumulativeByCampaign": {"clubes": {"Buenos Aires": [32231.57, 67683.25, 102275.99, 136071.07, 163948.55, 190793.54, 219900.95, 252315.35, 290531.34, 320304.0, 351519.74, 382702.66, 407276.07, 439605.83, 473457.68, 516700.16, 546880.46, 580989.14, 610467.73, 631447.78, 659357.11, 698385.97, 734696.95, 764935.79, 793845.22, 825260.96, 852806.94, 879061.72, 916262.04, 950133.16], "Corrientes": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Ciudad Autónoma de Buenos Aires": [5240.04, 11003.59, 16627.49, 22121.72, 26653.89, 31018.21, 35750.34, 41020.11, 47233.06, 52073.34, 57148.23, 62217.79, 66212.8, 71468.81, 76972.26, 84002.4, 88908.96, 94454.16, 99246.64, 102657.47, 107194.82, 113539.92, 119443.17, 124359.24, 129059.19, 134166.59, 138644.88, 142913.24, 148961.07, 154467.66], "Chubut": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "San Juan": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Misiones": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Córdoba": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Santa Fe": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Formosa": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Mendoza": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Catamarca": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Entre Rios": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Neuquén": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Tucuman": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Río Negro": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Salta": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Chaco": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "San Luis": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Santiago del Estero": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Santa Cruz": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "La Rioja": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Jujuy": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "La Pampa": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Tierra del Fuego": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}, "siguecon": {"Buenos Aires": [12323.09, 24372.47, 34647.6, 46573.75, 56649.1, 69373.76, 79017.55, 90855.01, 104714.52, 116212.07, 126367.44, 137122.09, 146583.03, 158141.82, 169588.39, 184046.96, 194438.47, 206092.16, 218901.74, 226343.64, 237214.79, 249588.2, 263544.45, 274978.45, 286951.45, 297739.85, 306172.05, 316127.0, 325707.15, 341595.16], "Corrientes": [899.92, 1779.86, 2530.22, 3401.16, 4136.93, 5066.18, 5770.44, 6634.9, 7647.02, 8486.66, 9228.28, 10013.66, 10704.57, 11548.67, 12384.59, 13440.46, 14199.32, 15050.36, 15985.81, 16529.27, 17323.16, 18226.76, 19245.95, 20080.94, 20955.3, 21743.15, 22358.93, 23085.91, 23785.52, 24945.78], "Ciudad Autónoma de Buenos Aires": [1680.63, 3323.94, 4725.27, 6351.77, 7725.85, 9461.25, 10776.48, 12390.88, 14281.06, 15849.1, 17234.1, 18700.83, 19991.12, 21567.52, 23128.61, 25100.48, 26517.69, 28107.03, 29854.01, 30868.94, 32351.56, 34039.05, 35942.42, 37501.8, 39134.69, 40606.02, 41756.01, 43113.67, 44420.22, 46587.04], "Chubut": [888.46, 1757.18, 2497.99, 3357.83, 4084.23, 5001.64, 5696.93, 6550.37, 7549.6, 8378.54, 9110.71, 9886.09, 10568.19, 11401.55, 12226.81, 13269.23, 14018.42, 14858.62, 15782.15, 16318.69, 17102.47, 17994.55, 19000.76, 19825.11, 20688.33, 21466.14, 22074.08, 22791.8, 23482.5, 24627.97], "San Juan": [841.07, 1663.47, 2364.76, 3178.75, 3866.41, 4734.89, 5393.1, 6201.03, 7146.96, 7931.69, 8624.82, 9358.84, 10004.57, 10793.48, 11574.73, 12561.55, 13270.79, 14066.18, 14940.46, 15448.38, 16190.36, 17034.87, 17987.41, 18767.8, 19584.98, 20321.31, 20896.82, 21576.27, 22230.13, 23314.52], "Misiones": [958.39, 1895.48, 2694.6, 3622.11, 4405.69, 5395.31, 6145.32, 7065.93, 8143.81, 9037.99, 9827.79, 10664.2, 11399.99, 12298.93, 13189.15, 14313.62, 15121.78, 16028.11, 17024.33, 17603.1, 18448.56, 19410.86, 20496.26, 21385.5, 22316.66, 23155.69, 23811.47, 24585.69, 25330.75, 26566.38], "Córdoba": [4425.59, 8752.87, 12442.98, 16726.01, 20344.37, 24914.17, 28377.54, 32628.72, 37606.08, 41735.19, 45382.29, 49244.6, 52642.31, 56793.41, 60904.21, 66096.71, 69828.61, 74013.8, 78614.1, 81286.7, 85190.85, 89634.51, 94646.62, 98752.9, 103052.76, 106927.19, 109955.45, 113530.57, 116971.08, 122676.94], "Santa Fe": [3741.2, 7399.3, 10518.76, 14139.45, 17198.25, 21061.36, 23989.14, 27582.91, 31790.56, 35281.13, 38364.22, 41629.25, 44501.53, 48010.69, 51485.78, 55875.3, 59030.08, 62568.06, 66456.95, 68716.26, 72016.66, 75773.14, 80010.15, 83481.43, 87116.35, 90391.62, 92951.58, 95973.83, 98882.29, 103705.77], "Formosa": [593.71, 1174.22, 1669.26, 2243.84, 2729.26, 3342.31, 3806.93, 4377.24, 5044.97, 5598.9, 6088.17, 6606.31, 7062.12, 7619.0, 8170.48, 8867.07, 9367.71, 9929.17, 10546.31, 10904.85, 11428.6, 12024.73, 12697.12, 13247.99, 13824.83, 14344.6, 14750.84, 15230.46, 15692.01, 16457.47], "Mendoza": [2088.85, 4131.3, 5873.01, 7894.58, 9602.42, 11759.34, 13394.03, 15400.56, 17749.85, 19698.76, 21420.17, 23243.16, 24846.85, 26806.15, 28746.42, 31197.25, 32958.69, 34934.07, 37105.38, 38366.84, 40209.57, 42306.95, 44672.64, 46610.78, 48640.29, 50469.0, 51898.31, 53585.75, 55209.65, 57902.78], "Catamarca": [535.72, 1059.54, 1506.22, 2024.68, 2462.69, 3015.86, 3435.1, 3949.71, 4552.22, 5052.05, 5493.53, 5961.06, 6372.35, 6874.84, 7372.46, 8001.01, 8452.75, 8959.37, 9516.24, 9839.76, 10312.35, 10850.26, 11456.97, 11954.04, 12474.54, 12943.54, 13310.11, 13742.88, 14159.35, 14850.05], "Entre Rios": [1585.06, 3134.91, 4456.55, 5990.56, 7286.5, 8923.21, 10163.65, 11686.24, 13468.92, 14947.8, 16254.04, 17637.35, 18854.27, 20341.02, 21813.34, 23673.08, 25009.69, 26508.64, 28156.28, 29113.49, 30511.8, 32103.33, 33898.46, 35369.16, 36909.19, 38296.85, 39381.44, 40661.9, 41894.14, 43937.74], "Neuquén": [1356.23, 2682.33, 3813.16, 5125.71, 6234.56, 7634.98, 8696.33, 9999.11, 11524.43, 12789.8, 13907.45, 15091.06, 16132.29, 17404.4, 18664.16, 20255.41, 21399.06, 22681.61, 24091.38, 24910.4, 26106.83, 27468.6, 29004.56, 30262.94, 31580.64, 32767.96, 33695.97, 34791.57, 35845.92, 37594.49], "Tucuman": [1242.03, 2456.48, 3492.1, 4694.12, 5709.61, 6992.11, 7964.1, 9157.19, 10554.07, 11712.9, 12736.45, 13820.4, 14773.96, 15938.96, 17092.65, 18549.91, 19597.26, 20771.83, 22062.89, 22812.96, 23908.65, 25155.75, 26562.39, 27714.81, 28921.56, 30008.91, 30858.78, 31862.13, 32827.71, 34429.05], "Río Negro": [1076.25, 2128.59, 3025.98, 4067.56, 4947.5, 6058.82, 6901.07, 7934.91, 9145.34, 10149.49, 11036.42, 11975.69, 12801.97, 13811.46, 14811.16, 16073.91, 16981.47, 17999.25, 19117.99, 19767.93, 20717.38, 21798.02, 23016.9, 24015.5, 25061.18, 26003.39, 26739.82, 27609.25, 28445.94, 29833.54], "Salta": [1025.74, 2028.69, 2883.96, 3876.66, 4715.3, 5774.46, 6577.18, 7562.5, 8716.12, 9673.14, 10518.45, 11413.63, 12201.13, 13163.25, 14116.03, 15319.52, 16184.47, 17154.49, 18220.72, 18840.17, 19745.05, 20774.97, 21936.65, 22888.38, 23884.98, 24782.97, 25484.84, 26313.46, 27110.89, 28433.36], "Chaco": [952.69, 1884.21, 2678.57, 3600.57, 4379.49, 5363.22, 6108.77, 7023.91, 8095.38, 8984.24, 9769.35, 10600.78, 11332.19, 12225.79, 13110.72, 14228.5, 15031.85, 15932.79, 16923.09, 17498.41, 18338.85, 19295.43, 20374.37, 21258.32, 22183.94, 23017.98, 23669.87, 24439.48, 25180.11, 26408.4], "San Luis": [750.27, 1483.89, 2109.47, 2835.58, 3449.01, 4223.73, 4810.88, 5531.59, 6375.4, 7075.42, 7693.71, 8348.5, 8924.51, 9628.25, 10325.16, 11205.45, 11838.13, 12547.65, 13327.54, 13780.63, 14442.51, 15195.85, 16045.55, 16741.7, 17470.66, 18127.5, 18640.88, 19246.97, 19830.25, 20797.57], "Santiago del Estero": [734.32, 1452.32, 2064.6, 2775.26, 3375.64, 4133.88, 4708.54, 5413.92, 6239.79, 6924.91, 7530.06, 8170.91, 8734.67, 9423.45, 10105.53, 10967.1, 11586.31, 12280.74, 13044.04, 13487.49, 14135.29, 14872.61, 15704.24, 16385.57, 17099.03, 17741.89, 18244.36, 18837.56, 19408.42, 20355.17], "Santa Cruz": [616.91, 1220.12, 1734.51, 2331.54, 2835.93, 3472.94, 3955.73, 4548.32, 5242.15, 5817.73, 6326.13, 6864.52, 7338.14, 7916.79, 8489.82, 9213.64, 9733.85, 10317.25, 10958.52, 11331.07, 11875.29, 12494.72, 13193.39, 13765.79, 14365.18, 14905.26, 15327.39, 15825.75, 16305.34, 17100.72], "La Rioja": [573.63, 1134.52, 1612.82, 2167.98, 2636.98, 3229.3, 3678.22, 4229.24, 4874.39, 5409.6, 5882.32, 6382.94, 6823.35, 7361.4, 7894.23, 8567.27, 9050.98, 9593.46, 10189.73, 10536.15, 11042.19, 11618.17, 12267.82, 12800.07, 13357.4, 13859.6, 14252.11, 14715.51, 15161.46, 15901.03], "Jujuy": [572.04, 1131.37, 1608.34, 2161.95, 2629.65, 3220.33, 3667.99, 4217.49, 4860.84, 5394.56, 5865.97, 6365.2, 6804.38, 7340.94, 7872.29, 8543.45, 9025.83, 9566.79, 10161.41, 10506.86, 11011.5, 11585.87, 12233.72, 12764.49, 13320.27, 13821.07, 14212.49, 14674.6, 15119.31, 15856.83], "La Pampa": [541.79, 1071.55, 1523.3, 2047.64, 2490.61, 3050.06, 3474.05, 3994.5, 4603.84, 5109.33, 5555.82, 6028.66, 6444.61, 6952.8, 7456.06, 8091.74, 8548.6, 9060.97, 9624.15, 9951.33, 10429.29, 10973.3, 11586.89, 12089.59, 12615.99, 13090.31, 13461.04, 13898.71, 14319.91, 15018.44], "Tierra del Fuego": [340.82, 674.06, 958.24, 1288.08, 1566.73, 1918.65, 2185.36, 2512.75, 2896.06, 3214.04, 3494.91, 3792.34, 4054.0, 4373.68, 4690.25, 5090.13, 5377.53, 5699.83, 6054.1, 6259.92, 6560.58, 6902.78, 7288.77, 7605.0, 7936.13, 8234.5, 8467.71, 8743.03, 9007.98, 9447.39]}, "sueno": {"Buenos Aires": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Corrientes": [8368.93, 15570.06, 23754.09, 31889.82, 38350.81, 43882.99, 50484.29, 57356.52, 66818.22, 74484.63, 80850.85, 87870.63, 93600.53, 100957.57, 108774.82, 119497.99, 127293.45, 131742.3, 138536.79, 144377.44, 151471.36, 158863.88, 168657.89, 178786.55, 180112.06, 186270.25, 193051.63, 201973.98, 209791.07, 214948.66], "Ciudad Autónoma de Buenos Aires": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Chubut": [5240.57, 9749.86, 14874.64, 19969.17, 24015.0, 27479.21, 31612.9, 35916.24, 41841.08, 46641.74, 50628.22, 55023.95, 58611.97, 63218.9, 68114.0, 74828.77, 79710.24, 82496.07, 86750.74, 90408.11, 94850.27, 99479.41, 105612.35, 111954.85, 112784.87, 116641.09, 120887.54, 126474.64, 131369.65, 134599.3], "San Juan": [4249.43, 7905.9, 12061.44, 16192.46, 19473.11, 22282.14, 25634.04, 29123.5, 33927.79, 37820.51, 41053.04, 44617.42, 47526.85, 51262.48, 55231.78, 60676.61, 64634.85, 66893.81, 70343.8, 73309.46, 76911.49, 80665.13, 85638.17, 90781.12, 91454.17, 94581.07, 98024.4, 102554.83, 106524.06, 109142.89], "Misiones": [3996.65, 7435.61, 11343.95, 15229.23, 18314.73, 20956.67, 24109.17, 27391.06, 31909.57, 35570.72, 38610.96, 41963.31, 44699.67, 48213.09, 51946.27, 57067.21, 60789.99, 62914.58, 66159.34, 68948.59, 72336.35, 75866.7, 80543.91, 85380.93, 86013.94, 88954.83, 92193.33, 96454.27, 100187.39, 102650.43], "Córdoba": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Santa Fe": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Formosa": [2922.36, 5436.93, 8294.72, 11135.64, 13391.76, 15323.55, 17628.67, 20028.39, 23332.33, 26009.37, 28232.4, 30683.64, 32684.47, 35253.49, 37983.2, 41727.64, 44449.74, 46003.24, 48375.82, 50415.32, 52892.45, 55473.86, 58893.84, 62430.68, 62893.53, 65043.92, 67411.92, 70527.52, 73257.18, 75058.16], "Mendoza": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Catamarca": [1354.57, 2520.13, 3844.77, 5161.59, 6207.35, 7102.77, 8171.24, 9283.56, 10815.0, 12055.87, 13086.28, 14222.49, 15149.91, 16340.7, 17605.98, 19341.6, 20603.35, 21323.43, 22423.16, 23368.51, 24516.72, 25713.25, 27298.48, 28937.87, 29152.42, 30149.16, 31246.78, 32690.92, 33956.18, 34790.97], "Entre Rios": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Neuquén": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Tucuman": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Río Negro": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Salta": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Chaco": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "San Luis": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Santiago del Estero": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Santa Cruz": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "La Rioja": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Jujuy": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "La Pampa": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "Tierra del Fuego": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}, "all": {"Buenos Aires": [46402.89, 92449.1, 136826.6, 183135.73, 221334.43, 261574.49, 299976.35, 343678.11, 396955.43, 439896.44, 479812.47, 521498.28, 556065.23, 599991.57, 645185.34, 703705.18, 745421.2, 786355.68, 829846.18, 859751.85, 900012.37, 948655.39, 1001548.67, 1048070.91, 1082420.08, 1123075.06, 1159146.9, 1199758.43, 1243962.03, 1291949.49], "Corrientes": [8619.08, 17171.91, 25414.79, 34016.46, 41111.66, 48586.03, 55718.97, 63836.33, 73732.3, 81708.36, 89122.54, 96865.45, 103286.07, 111445.15, 119839.65, 130709.39, 138457.91, 146061.27, 154139.39, 159694.2, 167172.37, 176207.55, 186032.19, 194673.44, 201053.61, 208605.05, 215305.2, 222848.57, 231059.14, 239972.55], "Ciudad Autónoma de Buenos Aires": [7222.81, 14390.11, 21297.66, 28505.88, 34451.68, 40715.22, 46692.64, 53495.01, 61787.86, 68471.82, 74684.92, 81173.5, 86554.0, 93391.33, 100425.94, 109534.81, 116028.09, 122399.73, 129169.21, 133824.16, 140090.89, 147662.39, 155895.46, 163136.85, 168483.45, 174811.58, 180426.32, 186747.68, 193628.17, 201097.63], "Chubut": [5720.46, 11396.96, 16867.73, 22576.64, 27285.7, 32246.42, 36980.54, 42368.01, 48935.94, 54229.63, 59150.4, 64289.35, 68550.7, 73965.86, 79537.27, 86751.49, 91894.16, 96940.49, 102301.92, 105988.63, 110951.88, 116948.5, 123469.09, 129204.26, 133438.77, 138450.64, 142897.51, 147904.02, 153353.36, 159269.17], "San Juan": [4758.59, 9480.61, 14031.5, 18780.48, 22697.73, 26824.33, 30762.42, 35244.02, 40707.58, 45111.16, 49204.53, 53479.39, 57024.21, 61528.83, 66163.43, 72164.61, 76442.57, 80640.38, 85100.31, 88167.12, 92295.82, 97284.13, 102708.31, 107479.15, 111001.64, 115170.78, 118869.93, 123034.62, 127567.68, 132488.77], "Misiones": [4642.0, 9248.33, 13687.72, 18320.34, 22141.62, 26167.12, 30008.72, 34380.51, 39710.22, 44005.91, 47998.98, 52169.11, 55627.08, 60021.34, 64542.38, 70396.53, 74569.67, 78664.64, 83015.29, 86006.97, 90034.51, 94900.61, 100191.89, 104845.83, 108282.02, 112349.02, 115957.54, 120020.19, 124442.19, 129242.71], "Córdoba": [4402.75, 8771.66, 12982.24, 17376.09, 21000.42, 24818.44, 28462.04, 32608.51, 37663.51, 41737.79, 45525.06, 49480.25, 52760.0, 56927.77, 61215.8, 66768.22, 70726.27, 74610.17, 78736.59, 81574.07, 85394.03, 90009.32, 95027.89, 99441.96, 102701.05, 106558.43, 109980.96, 113834.22, 118028.3, 122581.4], "Santa Fe": [3721.89, 7415.18, 10974.62, 14689.0, 17752.85, 20980.43, 24060.58, 27565.82, 31839.1, 35283.32, 38484.92, 41828.46, 44601.02, 48124.27, 51749.19, 56442.96, 59788.93, 63072.21, 66560.51, 68959.19, 72188.42, 76089.99, 80332.47, 84063.93, 86819.02, 90079.89, 92973.14, 96230.52, 99776.02, 103625.01], "Formosa": [3287.73, 6550.18, 9694.4, 12975.49, 15681.93, 18533.01, 21253.85, 24350.19, 28124.98, 31167.43, 33995.55, 36949.06, 39398.19, 42510.45, 45712.51, 49858.74, 52814.39, 55714.67, 58796.05, 60914.92, 63767.45, 67213.89, 70961.47, 74257.65, 76691.35, 79571.83, 82127.58, 85004.98, 88136.88, 91536.88], "Mendoza": [2078.07, 4140.17, 6127.54, 8201.41, 9912.07, 11714.15, 13433.91, 15391.02, 17776.95, 19699.99, 21487.56, 23354.38, 24902.4, 26869.57, 28893.49, 31514.2, 33382.38, 35215.56, 37163.2, 38502.47, 40305.47, 42483.86, 44852.6, 46936.01, 48474.28, 50294.94, 51910.36, 53729.07, 55708.65, 57857.69], "Catamarca": [1783.11, 3552.51, 5257.78, 7037.28, 8505.13, 10051.42, 11527.07, 13206.38, 15253.65, 16903.73, 18437.57, 20039.41, 21367.7, 23055.64, 24792.28, 27041.0, 28644.01, 30216.98, 31888.17, 33037.35, 34584.42, 36453.61, 38486.12, 40273.81, 41593.73, 43155.96, 44542.08, 46102.65, 47801.24, 49645.24], "Entre Rios": [1576.88, 3141.64, 4649.69, 6223.39, 7521.47, 8888.93, 10193.91, 11679.0, 13489.49, 14948.73, 16305.17, 17721.76, 18896.42, 20389.14, 21924.94, 23913.58, 25331.19, 26722.24, 28200.15, 29216.42, 30584.57, 32237.57, 34035.01, 35615.95, 36783.22, 38164.77, 39390.58, 40770.65, 42272.8, 43903.53], "Neuquén": [1349.23, 2688.08, 3978.42, 5324.92, 6435.6, 7605.64, 8722.22, 9992.91, 11542.02, 12790.59, 13951.21, 15163.28, 16168.36, 17445.58, 18759.65, 20461.2, 21674.15, 22864.37, 24128.92, 24998.47, 26169.1, 27583.46, 29121.4, 30474.1, 31472.85, 32654.95, 33703.79, 34884.63, 36169.91, 37565.21], "Tucuman": [1235.62, 2461.75, 3643.44, 4876.57, 5893.73, 6965.25, 7987.82, 9151.51, 10570.19, 11713.63, 12776.52, 13886.54, 14806.99, 15976.67, 17180.1, 18738.37, 19849.19, 20939.2, 22097.27, 22893.61, 23965.67, 25260.94, 26669.39, 27908.2, 28822.85, 29905.42, 30865.94, 31947.35, 33124.41, 34402.23], "Río Negro": [1070.7, 2133.16, 3157.12, 4225.65, 5107.05, 6035.54, 6921.62, 7929.99, 9159.31, 10150.12, 11071.14, 12032.99, 12830.59, 13844.14, 14886.94, 16237.22, 17199.77, 18144.28, 19147.78, 19837.82, 20766.79, 21889.17, 23109.62, 24183.07, 24975.64, 25913.71, 26746.03, 27683.09, 28703.04, 29810.3], "Salta": [1020.44, 2033.04, 3008.95, 4027.33, 4867.36, 5752.27, 6596.77, 7557.81, 8729.43, 9673.75, 10551.54, 11468.25, 12228.41, 13194.39, 14188.25, 15475.15, 16392.53, 17292.72, 18249.12, 18906.77, 19792.14, 20861.85, 22025.02, 23048.09, 23803.46, 24697.5, 25490.76, 26383.84, 27355.92, 28411.21], "Chaco": [947.77, 1888.26, 2794.66, 3740.51, 4520.71, 5342.61, 6126.96, 7019.56, 8107.74, 8984.8, 9800.08, 10651.51, 11357.53, 12254.72, 13177.79, 14373.05, 15225.09, 16061.17, 16949.46, 17560.27, 18382.59, 19376.11, 20456.45, 21406.66, 22108.23, 22938.6, 23675.36, 24504.85, 25407.7, 26387.83], "San Luis": [746.4, 1487.07, 2200.89, 2945.79, 3560.23, 4207.5, 4825.2, 5528.16, 6385.14, 7075.86, 7717.92, 8388.45, 8944.47, 9651.03, 10377.99, 11319.3, 11990.31, 12648.75, 13348.31, 13829.35, 14476.95, 15259.39, 16110.19, 16858.52, 17411.03, 18064.98, 18645.2, 19298.45, 20009.48, 20781.37], "Santiago del Estero": [730.53, 1455.44, 2154.08, 2883.13, 3484.49, 4118.0, 4722.56, 5410.57, 6249.32, 6925.34, 7553.75, 8210.01, 8754.2, 9445.74, 10157.23, 11078.52, 11735.26, 12379.69, 13064.37, 13535.18, 14169.0, 14934.8, 15767.5, 16499.91, 17040.67, 17680.71, 18248.59, 18887.94, 19583.84, 20339.32], "Santa Cruz": [613.73, 1222.74, 1809.68, 2422.16, 2927.38, 3459.6, 3967.5, 4545.51, 5250.16, 5818.1, 6346.03, 6897.37, 7354.55, 7935.52, 8533.26, 9307.25, 9858.98, 10400.39, 10975.59, 11371.13, 11903.62, 12546.97, 13246.54, 13861.85, 14316.15, 14853.86, 15330.94, 15868.07, 16452.71, 17087.4], "La Rioja": [570.67, 1136.96, 1682.72, 2252.24, 2722.01, 3216.89, 3689.17, 4226.62, 4881.84, 5409.93, 5900.83, 6413.49, 6838.6, 7378.81, 7934.62, 8654.31, 9167.34, 9670.76, 10205.61, 10573.4, 11068.53, 11666.75, 12317.24, 12889.38, 13311.82, 13811.8, 14255.42, 14754.87, 15298.49, 15888.65], "Jujuy": [569.09, 1133.8, 1678.04, 2245.98, 2714.45, 3207.95, 3678.91, 4214.87, 4868.27, 5394.89, 5884.43, 6395.66, 6819.59, 7358.3, 7912.56, 8630.25, 9141.85, 9643.88, 10177.24, 10544.01, 11037.76, 11634.32, 12283.0, 12853.55, 13274.81, 13773.41, 14215.79, 14713.85, 15255.96, 15844.48], "La Pampa": [539.0, 1073.85, 1589.32, 2127.23, 2570.93, 3038.34, 3484.4, 3992.02, 4610.87, 5109.65, 5573.3, 6057.5, 6459.02, 6969.25, 7494.2, 8173.94, 8658.5, 9133.98, 9639.14, 9986.52, 10454.16, 11019.18, 11633.57, 12173.95, 12572.94, 13045.17, 13464.16, 13935.89, 14449.34, 15006.74], "Tierra del Fuego": [339.06, 675.51, 999.77, 1338.14, 1617.25, 1911.28, 2191.87, 2511.19, 2900.48, 3214.24, 3505.9, 3810.49, 4063.07, 4384.03, 4714.25, 5141.84, 5446.65, 5745.76, 6063.53, 6282.05, 6576.22, 6931.65, 7318.13, 7658.06, 7909.04, 8206.1, 8469.67, 8766.41, 9089.4, 9440.04]}}, "leadsByCampaign": {"clubes": {"total": 219, "cpl": 5043.4}, "siguecon": {"total": 133, "cpl": 8397.02}, "sueno": {"total": 27, "cpl": 24855.28}, "all": {"total": 379, "cpl": 7631.66}}, "detalle": {"clubes": {"nombre": "Los clubes que crecen", "publicacion": "Publicación de Instagram: «Los clubes que crecen no trabajan más. Trabajan mejor.»", "objetivo": "Interacción (OUTCOME_ENGAGEMENT)", "destino": "WhatsApp", "zona": "Buenos Aires y CABA", "reel": "https://www.instagram.com/reel/DZxQof3OE02/", "seg": {"edadMin": 25, "edadMax": 65, "edadFoco": "25 a 53 años", "genero": "Todos", "geoTipo": "Regiones", "geo": ["Buenos Aires", "Ciudad Autónoma de Buenos Aires"], "intereses": [], "comportamientos": [], "ubicaciones": ["Feed", "Stories", "Explorar", "Reels", "Feed de perfil"], "plataforma": "Solo Instagram", "optimizacion": "Conversaciones", "destino": "WhatsApp", "avAudience": true, "avGeo": false, "tipoUbic": "Casa y ubicación reciente", "inicio": "30 de junio de 2026"}, "spend": 1104505.06, "clicks": 2661, "impressions": 153555, "reach": 71393, "cpc": 415.07, "ctr": 1.73, "leads": 219, "cpl": 5043.4, "convClick": 8.23, "frecuencia": 2.15, "placements": [{"n": "Stories", "spend": 830877.14, "clicks": 2344, "impr": 123734, "leads": 197, "cpl": 4217.65}, {"n": "Feed", "spend": 200367.69, "clicks": 232, "impr": 21227, "leads": 22, "cpl": 9107.62}, {"n": "Reels", "spend": 74764.73, "clicks": 71, "impr": 6821, "leads": 8, "cpl": 9345.59}], "provincias": 2, "topProv": [{"n": "Buenos Aires", "spend": 950050.79}, {"n": "Ciudad Autónoma de Buenos Aires", "spend": 154454.27}], "edadTop": "25-34", "pctHombres": 70, "dias": 30}, "siguecon": {"nombre": "¿Tu club sigue con...?", "publicacion": "Publicación de Instagram: «¿Tu club sigue con papeles y desorden?»", "objetivo": "Interacción (OUTCOME_ENGAGEMENT)", "destino": "WhatsApp", "zona": "Nacional — 24 provincias", "reel": "https://www.instagram.com/reel/DavGK8DRxb0/", "seg": {"edadMin": 25, "edadMax": 65, "edadFoco": "30 a 55 años", "genero": "Todos", "geoTipo": "País completo", "geo": ["Argentina (todo el país)"], "intereses": ["Fútbol", "Básquet", "Vóleibol", "Natación", "Clubes de deportes"], "comportamientos": ["Fanáticos del fútbol con alta interacción"], "ubicaciones": ["Feed", "Stories", "Explorar", "Reels", "Feed de perfil"], "plataforma": "Solo Instagram", "optimizacion": "Conversaciones", "destino": "WhatsApp", "avAudience": true, "avGeo": false, "tipoUbic": "Casa y ubicación reciente", "inicio": "13 de julio de 2026"}, "spend": 1116803.08, "clicks": 1122, "impressions": 227046, "reach": 115718, "cpc": 995.37, "ctr": 0.49, "leads": 133, "cpl": 8397.02, "convClick": 11.85, "frecuencia": 1.96, "placements": [{"n": "Feed", "spend": 580101.97, "clicks": 552, "impr": 131017, "leads": 68, "cpl": 8530.91}, {"n": "Reels", "spend": 310124.99, "clicks": 269, "impr": 62115, "leads": 38, "cpl": 8161.18}, {"n": "Stories", "spend": 213921.81, "clicks": 285, "impr": 36095, "leads": 25, "cpl": 8556.87}], "provincias": 24, "topProv": [{"n": "Buenos Aires", "spend": 341124.62}, {"n": "Córdoba", "spend": 122507.95}, {"n": "Santa Fe", "spend": 103562.92}], "edadTop": "45-54", "pctHombres": 81, "dias": 30}, "sueno": {"nombre": "No es un sueño", "publicacion": "Publicación de Instagram: «NO ES UN SUEÑO. ES REALIDAD.»", "objetivo": "Interacción (OUTCOME_ENGAGEMENT)", "destino": "WhatsApp", "zona": "6 provincias del norte y sur", "reel": "https://www.instagram.com/reel/DboRhfeukvJ/", "seg": {"edadMin": 25, "edadMax": 65, "edadFoco": "35 a 55 años", "genero": "Hombres y mujeres", "geoTipo": "Ciudades y regiones puntuales", "geo": ["Corrientes (provincia)", "Chubut (provincia)", "Formosa (ciudad)", "Posadas, Misiones", "San Fernando del Valle de Catamarca", "San Juan (ciudad)"], "intereses": ["Deportes", "Fútbol", "Sistemas de gestión de contenidos"], "comportamientos": [], "ubicaciones": ["Feed", "Stories", "Explorar", "Reels", "Feed de perfil"], "plataforma": "Solo Instagram", "optimizacion": "Conversaciones", "destino": "WhatsApp", "avAudience": true, "avGeo": true, "tipoUbic": "Casa y ubicación reciente", "inicio": "5 de agosto de 2026"}, "spend": 671092.64, "clicks": 827, "impressions": 229012, "reach": 62031, "cpc": 811.48, "ctr": 0.36, "leads": 27, "cpl": 24855.28, "convClick": 3.26, "frecuencia": 3.69, "placements": [{"n": "Feed", "spend": 361113.97, "clicks": 137, "impr": 105039, "leads": 6, "cpl": 60185.66}, {"n": "Stories", "spend": 266535.69, "clicks": 698, "impr": 102616, "leads": 24, "cpl": 11105.65}, {"n": "Reels", "spend": 51876.64, "clicks": 10, "impr": 24265, "leads": 2, "cpl": 25938.32}], "provincias": 6, "topProv": [{"n": "Corrientes", "spend": 214917.35}, {"n": "Chubut", "spend": 134579.69}, {"n": "San Juan", "spend": 109126.99}], "edadTop": "25-34", "pctHombres": 78, "dias": 30}}};
 const CAMPAIGN_NAMES = {
   all: "Todas las campañas",
   clubes: "BS_Los clubes que crecen",
@@ -663,28 +728,6 @@ function deltaHTML(pct, kind){
   else { cls = up ? 'up-neutral' : 'down-neutral'; }
   const arrow = up ? '▲' : '▼';
   return `<div class="delta ${cls}"><span class="arrow">${arrow}</span> ${Math.abs(pct)}% vs 1\u00aa quincena</div>`;
-}
-
-function renderKPIs(){
-  const t = computeTotals(state.campaign);
-  const d = DATA.deltas[state.campaign];
-  const L = (DATA.leadsByCampaign && DATA.leadsByCampaign[state.campaign]) || {total:0, cpl:0};
-  const kpis = [
-    {label:'Inversión total', value: fmtARS(t.spend), delta: deltaHTML(d.spend_pct,'volume')},
-    {label:'Leads', value: fmtNum(L.total), delta: (d.leads_pct!==undefined ? deltaHTML(d.leads_pct,'volume') : '')},
-    {label:'Costo por lead', value: fmtARS(L.cpl), delta:''},
-    {label:'Clicks', value: fmtNum(t.clicks), delta: deltaHTML(d.clicks_pct,'volume')},
-    {label:'CPC promedio', value: fmtARS(t.cpc), delta: deltaHTML(d.cpc_pct,'cpc')},
-    {label:'Impresiones', value: fmtNum(t.impressions), delta:''},
-    {label:'Alcance (reach)', value: fmtNum(t.reach), delta:''},
-    {label:'CTR promedio', value: t.ctr.toFixed(2)+'%', delta:''},
-  ];
-  document.getElementById('kpiRow').innerHTML = kpis.map(k=>`
-    <div class="kpi">
-      <div class="label">${k.label}</div>
-      <div class="value display">${k.value}</div>
-      ${k.delta}
-    </div>`).join('');
 }
 
 function renderTable(){
@@ -1069,7 +1112,6 @@ function renderAll(){
   stopPlay();
   if (typeof renderReels === 'function') renderReels();
   state.dayIndex = DATA.timelineDates.length - 1;
-  renderKPIs();
   renderTable();
   updateBars();
   updateBarSelection();
@@ -1184,7 +1226,6 @@ function renderVolumen(){
 
 function renderBot(){
   const T = BOT.totals;
-  const F = BOT.funnel;
 
   const C = BOT.crm;
   document.getElementById('botPeriod').textContent =
@@ -1195,155 +1236,17 @@ function renderBot(){
   document.getElementById('crmTopSub').textContent = `${C.top_dia} es el día más fuerte`;
 
 
-  document.getElementById('stepsWrap').innerHTML = F.slice(1).map(f =>
-    `<div class="step">
-       <span class="step-pct">${Math.round(f.pct)}%</span>
-       <span class="step-lab">${f.label.replace(/\s*\([^)]*\)/,'')}</span>
-       <span class="step-track"><i data-w="${f.pct}"></i></span>
-     </div>`).join('');
 
-  const fd = document.getElementById('funnelDesc');
-  if (fd) fd.textContent = 'Cada anillo muestra qué proporción sigue avanzando en la conversación.';
 
   renderHeat();
   renderVolumen();
 
-  buildFunnel3D();
 
-}
-
-/* ---------- EMBUDO 3D ---------- */
-let f3Ready = false;
-function buildFunnel3D(){
-  if (f3Ready || typeof THREE === 'undefined') return;
-  const cont = document.getElementById('funnel3d');
-  if (!cont) return;
-  f3Ready = true;
-
-  const W = cont.clientWidth, H = cont.clientHeight;
-  const scene = new THREE.Scene();
-  const cam = new THREE.PerspectiveCamera(42, W/H, 0.1, 1000);
-  const rend = new THREE.WebGLRenderer({antialias:true, alpha:true});
-  rend.setSize(W,H); rend.setPixelRatio(Math.min(devicePixelRatio,2));
-  cont.appendChild(rend.domElement);
-
-  scene.add(new THREE.AmbientLight(0x8fa8cc, 0.72));
-  const dl = new THREE.DirectionalLight(0xffffff, 0.85);
-  dl.position.set(8,20,12); scene.add(dl);
-  const pl = new THREE.PointLight(0x0098E0, 1.25, 60);
-  pl.position.set(-6,8,10); scene.add(pl);
-
-  const grid = new THREE.GridHelper(26,18,0x22345A,0x18243D);
-  grid.position.y = -6.6; scene.add(grid);
-
-  const F = BOT.funnel;
-  const maxR = 5.2, minR = 0.85, hSeg = 1.85;
-  const COLS = [0x2A4691, 0x2F5BB0, 0x0070B8, 0x0098E0, 0x4FC8F5];
-  const rings = [];
-
-  F.forEach((f,i)=>{
-    const rTop = minR + (maxR-minR) * Math.sqrt(f.pct/100);
-    const nxt  = F[i+1] ? F[i+1].pct : f.pct*0.55;
-    const rBot = minR + (maxR-minR) * Math.sqrt(nxt/100);
-    const geo = new THREE.CylinderGeometry(rTop, rBot, hSeg, 56, 1, true);
-    const mat = new THREE.MeshStandardMaterial({
-      color: COLS[i % COLS.length], emissive: COLS[i % COLS.length],
-      emissiveIntensity: 0.24, metalness: 0.45, roughness: 0.34,
-      side: THREE.DoubleSide, transparent: true, opacity: 0.93
-    });
-    const mesh = new THREE.Mesh(geo, mat);
-    mesh.position.y = (F.length/2 - i) * hSeg - hSeg/2;
-    mesh.scale.set(0.01,0.01,0.01);
-    mesh.userData = {label:f.label.replace(/\s*\([^)]*\)/,''), pct:f.pct, count:f.count, delay:i*140, base:0.24};
-    scene.add(mesh);
-    rings.push(mesh);
-
-    const edge = new THREE.Mesh(
-      new THREE.TorusGeometry(rTop, 0.045, 10, 64),
-      new THREE.MeshBasicMaterial({color:0x8FD8FF, transparent:true, opacity:0.5})
-    );
-    edge.rotation.x = Math.PI/2;
-    edge.position.y = mesh.position.y + hSeg/2;
-    scene.add(edge);
-  });
-
-  const tip = document.createElement('div');
-  tip.className = 'f3-tip'; cont.appendChild(tip);
-
-  const ray = new THREE.Raycaster(), mouse = new THREE.Vector2();
-  let rotY = 0.5, rotX = 0.42, dist = 21, drag = false, px = 0, py = 0, moved = 0;
-
-  rend.domElement.addEventListener('mousemove', e=>{
-    const r = rend.domElement.getBoundingClientRect();
-    if (drag){
-      rotY += (e.movementX||0)*0.007;
-      rotX = Math.min(1.15, Math.max(0.05, rotX + (e.movementY||0)*0.004));
-      moved += Math.abs(e.movementX||0) + Math.abs(e.movementY||0);
-      tip.style.display='none';
-      return;
-    }
-    mouse.x = ((e.clientX-r.left)/r.width)*2-1;
-    mouse.y = -((e.clientY-r.top)/r.height)*2+1;
-    ray.setFromCamera(mouse, cam);
-    const hit = ray.intersectObjects(rings);
-    rings.forEach(m => m.userData.hover = false);
-    if (hit.length){
-      const d = hit[0].object.userData;
-      d.hover = true;
-      tip.style.display='block';
-      tip.style.left = (e.clientX-r.left+14)+'px';
-      tip.style.top  = (e.clientY-r.top-10)+'px';
-      tip.innerHTML = `<b>${d.label}</b><br>${Math.round(d.pct)}% de las conversaciones`;
-      rend.domElement.style.cursor='pointer';
-    } else {
-      tip.style.display='none';
-      rend.domElement.style.cursor='grab';
-    }
-  });
-  rend.domElement.addEventListener('mouseleave', ()=>{ tip.style.display='none'; });
-  rend.domElement.addEventListener('mousedown', ()=>{ drag=true; moved=0; rend.domElement.style.cursor='grabbing'; });
-  window.addEventListener('mouseup', ()=>{ drag=false; rend.domElement.style.cursor='grab'; });
-  rend.domElement.addEventListener('wheel', e=>{
-    e.preventDefault(); dist = Math.min(34, Math.max(13, dist + e.deltaY*0.016));
-  }, {passive:false});
-
-  let t = 0, started = performance.now();
-  (function loop(){
-    requestAnimationFrame(loop);
-    t += 0.016;
-    const el = performance.now() - started;
-    rings.forEach(m=>{
-      const s = Math.max(0, Math.min(1, (el - m.userData.delay)/750));
-      const e = 1 - Math.pow(1-s, 3);
-      m.scale.set(e, e, e);
-      const target = m.userData.hover ? 0.68 : m.userData.base;
-      m.material.emissiveIntensity += (target - m.material.emissiveIntensity)*0.12;
-    });
-    if (!drag) rotY += 0.0016 + Math.sin(t*0.42)*0.0009;
-    rings.forEach((m,i)=>{
-      m.rotation.y = Math.sin(t*0.5 + i*0.55) * 0.045;
-      m.position.x = Math.sin(t*0.62 + i*0.8) * 0.045;
-    });
-    cam.position.x = Math.sin(rotY)*dist*Math.cos(rotX);
-    cam.position.z = Math.cos(rotY)*dist*Math.cos(rotX);
-    cam.position.y = dist*Math.sin(rotX) + 1.2;
-    cam.lookAt(0,0,0);
-    pl.position.x = Math.sin(t*0.5)*9;
-    pl.position.z = Math.cos(t*0.5)*9;
-    rend.render(scene, cam);
-  })();
-
-  addEventListener('resize', ()=>{
-    const w2 = cont.clientWidth, h2 = cont.clientHeight;
-    cam.aspect = w2/h2; cam.updateProjectionMatrix(); rend.setSize(w2,h2);
-  });
 }
 
 function animateBot(){
   document.getElementById('botSection').classList.add('revealed');
   const F = BOT.funnel;
-  document.querySelectorAll('.step-track i').forEach((el,i)=>
-    setTimeout(()=>{ el.style.width = el.dataset.w + '%'; }, 380 + i*120));
 }
 
 renderBot();
@@ -1365,7 +1268,7 @@ renderBot();
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const objetivos = document.querySelectorAll(
-    '.kpi, .panel, .crm-cell, .bot-section .section-head, .crm-strip'
+    '.panel, .crm-cell, .bot-section .section-head, .crm-strip'
   );
   objetivos.forEach((el,i)=>{
     el.classList.add('rv');
@@ -1446,10 +1349,13 @@ renderBot();
   }, {threshold:0.5});
 
   setTimeout(()=>{
-    document.querySelectorAll('.kpi .value, .crm-val, .step-pct')
+    document.querySelectorAll('.crm-val')
       .forEach(el=>io.observe(el));
   }, 400);
 })();
+
+
+
 
 
 /* ================= RESUMEN EJECUTIVO ================= */
@@ -1465,8 +1371,11 @@ function renderExec(){
   const camps = ['clubes','siguecon','sueno'].filter(k => L[k]);
 
   const filas = camps.map(k => {
-    const s = Object.values(DATA.regionByCampaign[k]).reduce((a,v)=>a+v.spend,0);
-    return {k, nombre:NOMBRES[k], spend:s, leads:L[k].total, cpl:L[k].cpl};
+    const r = DATA.regionByCampaign[k];
+    const s = Object.values(r).reduce((a,v)=>a+v.spend,0);
+    const cl = Object.values(r).reduce((a,v)=>a+v.clicks,0);
+    return {k, nombre:NOMBRES[k], spend:s, leads:L[k].total, cpl:L[k].cpl,
+            clicks:cl, cpc: cl ? s/cl : 0};
   });
   const totSpend = filas.reduce((a,f)=>a+f.spend,0);
   const totLeads = filas.reduce((a,f)=>a+f.leads,0);
@@ -1475,13 +1384,14 @@ function renderExec(){
     f.pctLeads = f.leads/totLeads*100;
     f.ratio = f.pctLeads / f.pctSpend;   // >1 rinde por encima de lo que cuesta
   });
-  filas.sort((a,b)=>a.cpl-b.cpl);
+  filas.sort((a,b)=>a.cpc-b.cpc);
 
-  const mejor = filas[0], peor = filas[filas.length-1];
+  const porCPL = filas.slice().sort((a,b)=>a.cpl-b.cpl);
+  const mejor = porCPL[0], peor = porCPL[porCPL.length-1];
   const d = DATA.deltas.all;
 
   document.getElementById('execPeriodo').textContent =
-    `${totLeads} leads · ${fmtARS(totSpend/totLeads)} por lead · 30 días`;
+    `Todas las campañas · ${totLeads} leads · ${fmtARS(totSpend/totLeads)} por lead · 30 días`;
 
 
   // tabla
@@ -1505,7 +1415,7 @@ function renderExec(){
       </td>
       <td class="num eff-num">${fmtARS(f.spend)}</td>
       <td class="num eff-num">${f.leads}</td>
-      <td class="num eff-cpl ${cls}">${fmtARS(f.cpl)}</td>
+      <td class="num eff-cpl ${cls}">${fmtARS(f.cpc)}</td>
       <td><span class="eff-badge ${badge}">${txt}</span></td>
     </tr>`;
   }).join('');
@@ -1523,6 +1433,230 @@ function renderExec(){
 }
 
 renderExec();
+
+
+/* ================= DETALLE POR CAMPAÑA ================= */
+
+function segBlock(c){
+  const s = c.seg;
+  if(!s) return '';
+  // barra de edad sobre una escala de 18 a 65+
+  const E0 = 18, E1 = 68;
+  const foco = s.edadFoco.match(/(\d+)\D+(\d+)/);
+  const f0 = foco ? +foco[1] : s.edadMin, f1 = foco ? +foco[2] : s.edadMax;
+  const pos = v => ((v - E0) / (E1 - E0) * 100);
+
+  const intereses = s.intereses.length
+    ? `<div class="tag-list">${s.intereses.map(i=>`<span class="tag on">${i}</span>`).join('')}</div>`
+    : `<div class="seg-v dim">Sin intereses definidos — audiencia abierta</div>`;
+  const comport = s.comportamientos.length
+    ? `<div class="tag-list" style="margin-top:6px">${s.comportamientos.map(i=>`<span class="tag on">${i}</span>`).join('')}</div>`
+    : '';
+
+  return `<div class="seg-block">
+    <h4 class="det-h4">A quién apunta · configuración en Meta</h4>
+    <div class="seg-grid">
+
+      <div class="seg-item">
+        <div class="seg-k">Rango de edad</div>
+        <div class="seg-v">${s.edadMin} a ${s.edadMax} años
+          <span class="dim">· foco ${s.edadFoco}</span></div>
+        <div class="age-bar">
+          <div class="age-track"></div>
+          <div class="age-fill" style="left:${pos(s.edadMin).toFixed(1)}%; width:${(pos(s.edadMax)-pos(s.edadMin)).toFixed(1)}%; opacity:.4"></div>
+          <div class="age-fill" style="left:${pos(f0).toFixed(1)}%; width:${(pos(f1)-pos(f0)).toFixed(1)}%"></div>
+        </div>
+        <div class="age-scale"><span>18</span><span>30</span><span>45</span><span>65+</span></div>
+      </div>
+
+      <div class="seg-item">
+        <div class="seg-k">Género</div>
+        <div class="seg-v">${s.genero}</div>
+        <div class="seg-k" style="margin-top:16px">Ubicación geográfica</div>
+        <div class="seg-v dim">${s.geoTipo}</div>
+        <div class="tag-list" style="margin-top:6px">${s.geo.map(g=>`<span class="tag">${g}</span>`).join('')}</div>
+        <div class="seg-v dim" style="margin-top:7px">${s.tipoUbic}${s.avGeo?' · expansión geográfica activada':''}</div>
+      </div>
+
+      <div class="seg-item">
+        <div class="seg-k">Intereses</div>
+        ${intereses}
+        ${comport ? `<div class="seg-k" style="margin-top:14px">Comportamientos</div>${comport}` : ''}
+        ${s.avAudience ? `<div class="seg-v dim" style="margin-top:10px">Advantage+ activado: Meta puede ampliar la audiencia más allá de estos criterios.</div>` : ''}
+      </div>
+
+      <div class="seg-item">
+        <div class="seg-k">Entrega</div>
+        <div class="seg-v">${s.plataforma}</div>
+        <div class="tag-list" style="margin-top:6px">${s.ubicaciones.map(u=>`<span class="tag">${u}</span>`).join('')}</div>
+        <div class="seg-k" style="margin-top:16px">Optimización</div>
+        <div class="seg-v">${s.optimizacion} <span class="dim">→ ${s.destino}</span></div>
+        <div class="seg-v dim" style="margin-top:7px">Activa desde el ${s.inicio}</div>
+      </div>
+
+    </div>
+  </div>`;
+}
+
+function renderDetalle(){
+  const D = DATA.detalle;
+  if(!D) return;
+  const cont = document.getElementById('detWrap');
+  if(!cont) return;
+
+  const orden = Object.keys(D).sort((a,b)=>D[a].cpc - D[b].cpc);
+
+  cont.innerHTML = orden.map(k=>{
+    const c = D[k];
+    let col, txt;
+    if(c.cpc < 600){ col='var(--good)'; txt='Escalar'; }
+    else if(c.cpc < 900){ col='var(--amber)'; txt='Sostener'; }
+    else { col='var(--bad)'; txt='Revisar'; }
+
+    const maxPl = Math.max(...c.placements.map(p=>p.spend));
+    const placements = c.placements.map(p=>
+      `<div class="pl-row">
+         <span class="pl-name">${p.n}</span>
+         <span class="pl-bar"><i style="width:${(p.spend/maxPl*100).toFixed(1)}%"></i></span>
+         <span class="pl-val"><b>${p.leads}</b> leads</span>
+       </div>`).join('');
+
+    const mejorPl = c.placements.slice().filter(p=>p.leads>0).sort((a,b)=>a.cpl-b.cpl)[0];
+    const provs = c.topProv.map(p=>p.n).join(', ');
+
+    return `<div class="det-card">
+      <div class="det-top">
+        <div>
+          <h3 class="det-name">${c.nombre}</h3>
+          <p class="det-pub">${c.publicacion}</p>
+          <div class="det-meta">
+            <span class="det-chip">Objetivo: <b>${c.objetivo}</b></span>
+            <span class="det-chip">Destino: <b>${c.destino}</b></span>
+            <span class="det-chip">Zona: <b>${c.zona}</b></span>
+            <span class="det-chip"><b>${c.dias}</b> días activa</span>
+          </div>
+        </div>
+        <div class="det-verdict" style="color:${col}">${fmtARS(c.cpc)}<small>${txt} · CPC</small></div>
+      </div>
+
+      <div class="det-grid">
+        <div class="det-m"><div class="det-mv">${fmtARS(c.spend)}</div><div class="det-ml">Inversión</div></div>
+        <div class="det-m"><div class="det-mv">${fmtNum(c.leads)}</div><div class="det-ml">Leads</div></div>
+        <div class="det-m"><div class="det-mv">${fmtNum(c.clicks)}</div><div class="det-ml">Clicks</div></div>
+      </div>
+
+      <div class="det-cols">
+        <div>
+          <h4 class="det-h4">Dónde se muestra</h4>
+          ${placements}
+        </div>
+        <div>
+          <h4 class="det-h4">A quién le llega</h4>
+          <p class="det-note">
+            Alcanzó a <b>${fmtNum(c.reach)} personas</b> con ${fmtNum(c.impressions)} impresiones
+            (${c.frecuencia} veces cada una en promedio).<br><br>
+            El grupo que más responde es <b>${c.edadTop} años</b>, y el
+            <b>${c.pctHombres}% de los clicks</b> son de hombres.<br><br>
+            Corre en <b>${c.provincias} provincia${c.provincias>1?'s':''}</b>${c.provincias>1?', encabezadas por '+provs:''}.
+            ${mejorPl ? `La ubicación más eficiente es <b>${mejorPl.n}</b>.` : ''}
+          </p>
+          <a class="det-link" href="${c.reel}" target="_blank" rel="noopener noreferrer">Ver la publicación ↗</a>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+renderDetalle();
+
+
+/* ================= SEGMENTACIÓN GENERAL ================= */
+function renderSegGeneral(){
+  const D = DATA.detalle;
+  const cont = document.getElementById('segGeneral');
+  if(!D || !cont) return;
+  const camps = Object.keys(D).filter(k => D[k].seg);
+  if(!camps.length) return;
+
+  const segs = camps.map(k => D[k].seg);
+
+  // edad: rango más amplio y foco combinado
+  const eMin = Math.min(...segs.map(s=>s.edadMin));
+  const eMax = Math.max(...segs.map(s=>s.edadMax));
+  const focos = segs.map(s=>{ const m = s.edadFoco.match(/(\d+)\D+(\d+)/); return m?[+m[1],+m[2]]:[s.edadMin,s.edadMax]; });
+  const f0 = Math.min(...focos.map(f=>f[0])), f1 = Math.max(...focos.map(f=>f[1]));
+
+  // provincias donde hay inversión real
+  const reg = DATA.regionByCampaign.all;
+  const activas = Object.entries(reg).filter(([,v])=>v.spend>0).sort((a,b)=>b[1].spend-a[1].spend);
+  const totSpend = activas.reduce((a,[,v])=>a+v.spend,0);
+  const top5 = activas.slice(0,5);
+  const pctTop5 = top5.reduce((a,[,v])=>a+v.spend,0)/totSpend*100;
+
+  // intereses únicos
+  const ints = [...new Set(segs.flatMap(s=>s.intereses))];
+  const comps = [...new Set(segs.flatMap(s=>s.comportamientos))];
+  const ubis  = [...new Set(segs.flatMap(s=>s.ubicaciones))];
+
+  // demografía real observada
+  const age = DATA.ageByCampaign.all;
+  const topAge = age.byAge.slice().sort((a,b)=>b[1].clicks-a[1].clicks)[0];
+  const g = age.gender, tg = g.male + g.female;
+  const pctH = Math.round(g.male/tg*100);
+
+  const E0 = 18, E1 = 68, pos = v => ((v - E0)/(E1 - E0)*100);
+
+  cont.innerHTML = `<div class="seg-panel">
+    <h3>A quién apuntan las campañas</h3>
+    <p class="desc">Configuración combinada de las ${camps.length} campañas activas en Meta.</p>
+
+    <div class="seg-grid">
+      <div class="seg-item">
+        <div class="seg-k">Rango de edad</div>
+        <div class="seg-v">${eMin} a ${eMax} años <span class="dim">· foco ${f0} a ${f1}</span></div>
+        <div class="age-bar">
+          <div class="age-track"></div>
+          <div class="age-fill" style="left:${pos(eMin).toFixed(1)}%; width:${(pos(eMax)-pos(eMin)).toFixed(1)}%; opacity:.4"></div>
+          <div class="age-fill" style="left:${pos(f0).toFixed(1)}%; width:${(pos(f1)-pos(f0)).toFixed(1)}%"></div>
+        </div>
+        <div class="age-scale"><span>18</span><span>30</span><span>45</span><span>65+</span></div>
+        <div class="seg-k" style="margin-top:14px">Género</div>
+        <div class="seg-v">Todos <span class="dim">· sin restricción</span></div>
+      </div>
+
+      <div class="seg-item">
+        <div class="seg-k">Cobertura geográfica</div>
+        <div class="seg-v">${activas.length} provincias con inversión</div>
+        <div class="tag-list" style="margin-top:7px">${top5.map(([n])=>`<span class="tag">${n}</span>`).join('')}</div>
+        <div class="seg-v dim" style="margin-top:8px">Estas 5 concentran el ${Math.round(pctTop5)}% del presupuesto.</div>
+        <div class="seg-v dim" style="margin-top:6px">Casa y ubicación reciente.</div>
+      </div>
+
+      <div class="seg-item">
+        <div class="seg-k">Intereses usados</div>
+        ${ints.length ? `<div class="tag-list">${ints.map(i=>`<span class="tag on">${i}</span>`).join('')}</div>`
+                      : `<div class="seg-v dim">Sin intereses</div>`}
+        ${comps.length ? `<div class="seg-k" style="margin-top:14px">Comportamientos</div>
+           <div class="tag-list">${comps.map(i=>`<span class="tag on">${i}</span>`).join('')}</div>` : ''}
+        <div class="seg-v dim" style="margin-top:10px">Advantage+ activado: Meta amplía más allá de estos criterios.</div>
+      </div>
+
+      <div class="seg-item">
+        <div class="seg-k">Entrega</div>
+        <div class="seg-v">Solo Instagram</div>
+        <div class="tag-list" style="margin-top:7px">${ubis.map(u=>`<span class="tag">${u}</span>`).join('')}</div>
+        <div class="seg-k" style="margin-top:14px">Optimización</div>
+        <div class="seg-v">Conversaciones <span class="dim">→ WhatsApp</span></div>
+      </div>
+    </div>
+
+    <div class="seg-foot">
+      <b>Quién responde en los hechos:</b> el grupo de <b>${topAge[0]} años</b> es el que más clicks genera,
+      y el <b>${pctH}%</b> de los clicks son de hombres. La audiencia real se concentra bastante
+      por debajo del rango configurado, así que el tope de ${eMax} años está aportando poco.
+    </div>
+  </div>`;
+}
+renderSegGeneral();
 
 </script>
 </body>
